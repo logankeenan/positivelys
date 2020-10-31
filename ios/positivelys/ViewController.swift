@@ -7,22 +7,32 @@
 //
 
 import UIKit
+import Foundation
+import WebKit
 
+class ViewController:  UIViewController, WKUIDelegate  {
+    var webView: WKWebView!
 
-class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-    super.viewDidLoad()
-    // Do any additional setup after loading the view.
-        
-        let dirPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-
-        let result = call_database(dirPaths[0] + "/database.sqlite")
-        let query_result = String(cString: result!)
-        call_database_free(UnsafeMutablePointer(mutating: result))
-        print(query_result)
+    override func loadView() {
+        let webConfiguration = WKWebViewConfiguration()
+        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.uiDelegate = self
+        view = webView
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+
+        let request = "{\"body\":null,\"method\":\"GET\",\"path\":\"/positivelys\"}"
+        let result = make_app_request(request)
+        let query_result = String(cString: result!)
+
+        make_app_request_free(UnsafeMutablePointer(mutating: result))
+
+        let response: AppResponse? = try? JSONDecoder().decode(AppResponse.self, from: query_result.data(using: .utf8)!)
+        webView.loadHTMLString((response?.body)!, baseURL: URL(string: "https://logankeenan.com"))
+    }
 
 
 }

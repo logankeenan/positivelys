@@ -1,19 +1,19 @@
 use std::os::raw::{c_char};
 use std::ffi::{CString, CStr};
-use rust_core::database_test;
+use rust_core::make_request;
 
 #[no_mangle]
-pub extern fn call_database(to: *const c_char) -> *mut c_char {
+pub extern fn make_app_request(to: *const c_char) -> *mut c_char {
     let c_str = unsafe { CStr::from_ptr(to) };
 
-    let database_path = c_str.to_str().unwrap().to_string();
-    let database_result = database_test(database_path);
+    let request_as_json = c_str.to_str().unwrap().to_string();
+    let response_as_json = make_request(request_as_json);
 
-    CString::new(database_result).unwrap().into_raw()
+    CString::new(response_as_json).unwrap().into_raw()
 }
 
 #[no_mangle]
-pub extern fn call_database_free(s: *mut c_char) {
+pub extern fn make_app_request_free(s: *mut c_char) {
     unsafe {
         if s.is_null() { return }
         CString::from_raw(s)

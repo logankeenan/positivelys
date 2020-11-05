@@ -1,1 +1,2 @@
- ios/rust-ios/
+rust-ios/include/*
+rust-ios/libs/*

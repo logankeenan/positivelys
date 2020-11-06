@@ -12,9 +12,13 @@ extern crate serde_json;
 #[macro_use]
 extern crate include_dir;
 
+#[macro_use]
+extern crate handlebars;
+
 mod controllers;
 mod repositories;
 mod models;
+mod views;
 
 use routines::App;
 use routines::models::app_request::{AppRequest, AppContext};

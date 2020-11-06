@@ -1,7 +1,17 @@
 {{#> application_layout}}
     {{#*inline "page_content"}}
-        <section class="container">
-            <form method="POST" action="/positivelys">
+        <style>
+            body {
+                background: #f0f2f5;
+            }
+
+            .font-12 {
+                font-size: 12px;
+            }
+
+        </style>
+        <section class="container ">
+            <form method="POST" action="/positivelys" class="mb-3">
                 <div class="form-group">
                     <label class="sr-only" for="moment">Moment</label>
                     <textarea
@@ -11,21 +21,21 @@
                             placeholder="What's something positive about today?"
                             rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary float-right">Submit</button>
+                <div class="clearfix">
+                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                </div>
             </form>
-        </section>
-        <ul>
-            {{#each positivelys as |positively|}}
-                <li>
-                    {{positively.moment}}
-                    <br>
-                    {{positively.created_at}}<br>
-                    {{positively.updated_at}}<br>
-                    {{positively.id}}
-                </li>
 
-            {{/each}}
-        </ul>
+            <ul class="list-unstyled">
+                {{#each positivelys as |positively|}}
+                    <li class="my-2 p-3 bg-white shadow-sm rounded-sm font-weight-bold">
+                        {{positively.moment}}
+                        <div class="mb-n2 mr-n2 font-12 text-muted text-right font-weight-lighter">{{fmt_positively_time positively.created_at}}</div>
+                    </li>
+                {{/each}}
+            </ul>
+        </section>
+
     {{/inline}}
 {{/application_layout}}
 

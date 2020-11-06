@@ -1543,6 +1543,7 @@ version = "0.1.0"
 dependencies = [
  "chrono",
  "futures",
+ "handlebars",
  "include_dir",
  "routines",
  "routines_macros",

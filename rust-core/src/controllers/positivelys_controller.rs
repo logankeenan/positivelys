@@ -2,9 +2,8 @@ use routines_macros::route;
 use routines::models::app_request::AppRequest;
 use routines::factories::app_response_factory;
 use serde_json::Error;
-use routines::models::app_response::{AppResponse, AppResponseFactoryMeta};
+use routines::models::app_response::{AppResponse};
 use crate::models::positively::Positively;
-use crate::repositories::database::create_database;
 use rusqlite::Connection;
 use crate::repositories::positivelys_repository::{create_positively, all_positivelys};
 

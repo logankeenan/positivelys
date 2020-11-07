@@ -10,7 +10,7 @@
             }
 
         </style>
-        <section class="container ">
+        <section class="container mt-2">
             <form method="POST" action="/positivelys" class="mb-3">
                 <div class="form-group">
                     <label class="sr-only" for="moment">Moment</label>
@@ -28,9 +28,13 @@
 
             <ul class="list-unstyled">
                 {{#each positivelys as |positively|}}
-                    <li class="my-2 p-3 bg-white shadow-sm rounded-sm font-weight-bold">
+
+                    <li class="my-2 pt-1 p-3 bg-white shadow-sm rounded-sm font-weight-bold">
+                        <div class="mt-n2 pb-2 font-12 text-muted font-weight-lighter">
+                            {{fmt_positively_time positively.created_at}}
+                        </div>
                         {{positively.moment}}
-                        <div class="mb-n2 mr-n2 font-12 text-muted text-right font-weight-lighter">{{fmt_positively_time positively.created_at}}</div>
+
                     </li>
                 {{/each}}
             </ul>

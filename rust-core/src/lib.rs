@@ -25,7 +25,6 @@ use routines::models::app_request::{AppRequest, AppContext};
 use serde_json::Error;
 use futures::executor::block_on;
 use crate::repositories::database::{create_database, run_migrations};
-use std::collections::HashMap;
 
 async fn handle_request(app_request_json: String, app_context_json: String) -> String {
     let mut app = App::new();

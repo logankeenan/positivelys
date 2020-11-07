@@ -1,6 +1,6 @@
 use crate::models::positively::Positively;
 use rusqlite::{params, Connection, Error};
-use chrono::{DateTime, Utc, Duration, NaiveDateTime};
+use chrono::{DateTime, Utc, NaiveDateTime};
 
 pub fn create_positively_table(connection: &Connection) {
     connection.execute(
@@ -46,7 +46,7 @@ fn convert_int_to_datetime(result: Result<i64, Error>) -> Option<DateTime<Utc>> 
             let time = NaiveDateTime::from_timestamp(date_in_seconds_from_epoch, 0);
             Some(DateTime::<Utc>::from_utc(time, Utc))
         }
-        Err(error) => {
+        Err(_) => {
             None
         }
     };

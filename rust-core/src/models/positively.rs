@@ -1,4 +1,4 @@
-use chrono::{NaiveDateTime, DateTime, Utc};
+use chrono::{DateTime, Utc};
 
 #[derive(Deserialize, Serialize)]
 pub struct Positively {

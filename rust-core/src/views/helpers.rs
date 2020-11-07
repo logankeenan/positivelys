@@ -1,6 +1,5 @@
 use handlebars::{Handlebars};
-use chrono::{NaiveDate, DateTime, NaiveTime, LocalResult, Offset, Local};
-use chrono::offset::TimeZone;
+use chrono::{DateTime, Local};
 
 pub fn register_helpers(handlebars: &mut Handlebars) {
     handlebars_helper!(fmt_positively_time: | date_string: str| {

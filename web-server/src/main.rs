@@ -1,24 +1,15 @@
-#[macro_use]
-extern crate serde_derive;
-
 // TODO - I need to think of a way to not have to do this
 // This is required because the macro wants it when I'm generating the
 // routes
 #[macro_use]
 extern crate serde_json;
 
-// TODO - I need to think of a way to not have to do this
-// This is required because the macro to generate routes use the include_dir! macro
-#[macro_use]
-extern crate include_dir;
-
-use actix_web::{get, post, web, App, HttpServer, Responder, HttpResponse, HttpRequest, HttpMessage, http};
+use actix_web::{get, post, web, App, HttpServer, Responder, HttpResponse, http};
 use rust_core::make_request;
 use routines::models::app_request::AppRequest;
 use routines::routing::RouteDefinitionMethod;
 use routines::models::app_response::AppResponse;
 use serde_json::Error;
-use actix_web::test::read_body;
 use actix_web::web::Bytes;
 
 #[get("{url}")]

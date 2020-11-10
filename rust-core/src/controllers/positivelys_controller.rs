@@ -6,11 +6,15 @@ use routines::models::app_response::{AppResponse};
 use crate::models::positively::Positively;
 use rusqlite::Connection;
 use crate::repositories::positivelys_repository::{create_positively, all_positivelys};
+use chrono::{Local, Utc};
+use rand::seq::SliceRandom;
 
 
 #[derive(Deserialize, Serialize)]
 pub struct IndexViewModel {
-    positivelys: Vec<Positively>
+    positivelys: Vec<Positively>,
+    todays_total: usize,
+    animation_class: String,
 }
 
 #[route(path = "/positivelys")]
@@ -18,9 +22,40 @@ pub async fn index(app_request: AppRequest) -> IndexViewModel {
     let connection = Connection::open(app_request.app_context.unwrap().database_path).unwrap();
     let positivelys = all_positivelys(&connection);
 
-    println!("length: {}", positivelys.len());
+    let todays_date = Utc::now().with_timezone(&Local).date();
+    let todays_total = positivelys.iter().filter(|positively| {
+        positively.created_at.with_timezone(&Local).date().eq(&todays_date)
+    }).count();
+
+    let animation_classes = vec![
+        "bounce-in-left",
+        "rotate-in-center",
+        "bounce-in-bck",
+        "roll-in-left",
+        "swirl-in-bottom-bck",
+        "slide-in-elliptic-right-fwd",
+        "rotate-in-diag-1",
+        "jello-horizontal"
+    ];
+
+    let option = animation_classes.choose(&mut rand::thread_rng()).unwrap().to_string();
     IndexViewModel {
-        positivelys
+        positivelys,
+        todays_total,
+        animation_class: option,
+    }
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct NewViewModel {
+    form: Positively
+}
+
+#[route(path = "/positivelys/new")]
+pub async fn new(_app_request: AppRequest) -> NewViewModel {
+    println!("here");
+    NewViewModel {
+        form: Positively::new()
     }
 }
 
@@ -41,7 +76,7 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
                 status_code: 200,
                 body: Some("failure".to_string()),
                 headers: None,
-                factory_meta: None
+                factory_meta: None,
             }
         }
     }

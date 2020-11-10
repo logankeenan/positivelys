@@ -1,0 +1,22 @@
+{{#> application_layout}}
+    {{#*inline "page_content"}}
+        <section class="container">
+            <form method="POST" action="/positivelys" class="my-3">
+                <div class="form-group">
+                    <label class="sr-only" for="moment">Moment</label>
+                    <textarea
+                            class="form-control"
+                            id="moment"
+                            name="moment"
+                            placeholder="What's positive about today?"
+                            rows="3"></textarea>
+                </div>
+                <div class="clearfix">
+                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                </div>
+            </form>
+        </section>
+
+    {{/inline}}
+{{/application_layout}}
+

@@ -30,6 +30,7 @@ async fn handle_request(app_request_json: String, app_context_json: String) -> S
     let mut app = App::new();
     app.add_route(controllers::positivelys_controller::index);
     app.add_route(controllers::positivelys_controller::create);
+    app.add_route(controllers::positivelys_controller::new);
     app.start();
 
     let app_request_result: Result<AppRequest, Error> = serde_json::from_str(&app_request_json);

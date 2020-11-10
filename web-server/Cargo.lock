@@ -1545,6 +1545,7 @@ dependencies = [
  "futures",
  "handlebars",
  "include_dir",
+ "rand",
  "routines",
  "routines_macros",
  "rusqlite",

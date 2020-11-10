@@ -12,7 +12,7 @@ use routines::models::app_response::AppResponse;
 use serde_json::Error;
 use actix_web::web::Bytes;
 
-#[get("{url}")]
+#[get("{url:.*}")]
 async fn index(web::Path(url): web::Path<String>) -> impl Responder {
     let request = AppRequest {
         path: format!("/{}", url),
@@ -21,6 +21,7 @@ async fn index(web::Path(url): web::Path<String>) -> impl Responder {
         app_context: None,
         headers: None
     };
+    println!("url: {}", url);
 
     let json = json!({
 	    "database_path": "./database.sqlite"
@@ -30,7 +31,15 @@ async fn index(web::Path(url): web::Path<String>) -> impl Responder {
     let result: Result<AppResponse, Error> = serde_json::from_str(&response_as_json);
     match result {
         Ok(response) => {
-            HttpResponse::Ok().body(response.body.unwrap())
+            match response.body {
+                None => {
+                    HttpResponse::Ok().body("error")
+                },
+                Some(body) => {
+                    HttpResponse::Ok().body(body)
+                },
+            }
+
         }
         Err(_) => {
             HttpResponse::Ok().body("error")
@@ -38,7 +47,7 @@ async fn index(web::Path(url): web::Path<String>) -> impl Responder {
     }
 }
 
-#[post("{url}")]
+#[post("{url:.*}")]
 async fn post_route(web::Path(url): web::Path<String>, bytes: Bytes) -> impl Responder {
     let a = match String::from_utf8(bytes.to_vec()) {
         Ok(text) => text,

@@ -12,6 +12,7 @@
             border-bottom: 1px solid #E6E6E6;
         }
     </style>
+
 </head>
 <body>
 <nav class="navbar bg-white sticky-top border-bottom-gray">
@@ -33,7 +34,37 @@
         const htmlResponse = await response.text();
 
         morphdom(document.documentElement, htmlResponse);
+
+        history.pushState(undefined, undefined, response.url);
     });
+
+    document.addEventListener('click', async function (event) {
+        let anchorTag = event.target;
+        if (anchorTag.tagName.toLowerCase() === "a") {
+            event.preventDefault();
+
+            const response = await fetch(anchorTag.href);
+
+            const htmlResponse = await response.text();
+
+            morphdom(document.documentElement, htmlResponse);
+
+            history.pushState(undefined, undefined, anchorTag.href);
+        }
+    });
+
+    window.addEventListener('popstate', async function (event) {
+        let url = event.target.location.toString();
+
+        const response = await fetch(url);
+
+        const htmlResponse = await response.text();
+
+        morphdom(document.documentElement, htmlResponse);
+
+        history.pushState(undefined, undefined, url);
+    });
+
 
 </script>
 </body>

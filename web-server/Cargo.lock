@@ -1499,6 +1499,7 @@ dependencies = [
  "actix-router",
  "async-trait",
  "handlebars",
+ "http",
  "include_dir",
  "routines_macros",
  "serde",

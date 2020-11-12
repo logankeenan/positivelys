@@ -5,9 +5,10 @@ use serde_json::Error;
 use routines::models::app_response::{AppResponse};
 use crate::models::positively::Positively;
 use rusqlite::Connection;
-use crate::repositories::positivelys_repository::{create_positively, all_positivelys};
+use crate::repositories::positivelys_repository::{create_positively, all_positivelys, remove_positively};
 use chrono::{Local, Utc};
 use rand::seq::SliceRandom;
+use std::borrow::Borrow;
 
 
 #[derive(Deserialize, Serialize)]
@@ -80,5 +81,15 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
             }
         }
     }
+}
+
+#[route(path = "/positivelys/{id}/delete", method = "POST")]
+pub async fn delete(app_request: AppRequest) -> AppResponse {
+    let connection = Connection::open(app_request.app_context.clone().unwrap().database_path).unwrap();
+    let positively_id = app_request.get_path_param("id").unwrap().parse::<i64>().unwrap();
+
+    remove_positively(&connection, positively_id);
+
+    app_response_factory::redirect("/positivelys".to_string())
 }
 

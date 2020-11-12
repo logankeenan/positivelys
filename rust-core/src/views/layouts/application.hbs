@@ -22,6 +22,7 @@
 <script src="https://unpkg.com/morphdom@2.6.1/dist/morphdom-umd.min.js"></script>
 <script>
     document.addEventListener('submit', async function (event) {
+        console.log('here');
         event.preventDefault();
 
         const formData = new FormData(event.target);

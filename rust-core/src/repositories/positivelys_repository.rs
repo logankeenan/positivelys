@@ -40,6 +40,14 @@ pub fn all_positivelys(connection: &Connection) -> Vec<Positively> {
     map
 }
 
+pub fn remove_positively(connection: &Connection, id: i64) {
+    let mut result = connection.prepare("delete from positivelys where id = ?1").unwrap();
+
+    let rows = result.execute(params![id]);
+
+    println!("{}", rows.unwrap());
+}
+
 fn convert_int_to_datetime(result: Result<i64, Error>) -> Option<DateTime<Utc>> {
     let updated_at = match result {
         Ok(date_in_seconds_from_epoch) => {

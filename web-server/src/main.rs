@@ -14,13 +14,8 @@ use actix_web::web::Bytes;
 
 #[get("{url:.*}")]
 async fn index(web::Path(url): web::Path<String>) -> impl Responder {
-    let request = AppRequest {
-        path: format!("/{}", url),
-        method: RouteDefinitionMethod::GET,
-        body: None,
-        app_context: None,
-        headers: None
-    };
+    let request = AppRequest::new(format!("/{}", url));
+
     println!("url: {}", url);
 
     let json = json!({
@@ -49,20 +44,24 @@ async fn index(web::Path(url): web::Path<String>) -> impl Responder {
 
 #[post("{url:.*}")]
 async fn post_route(web::Path(url): web::Path<String>, bytes: Bytes) -> impl Responder {
-    let a = match String::from_utf8(bytes.to_vec()) {
+    let body = match String::from_utf8(bytes.to_vec()) {
         Ok(text) => text,
         Err(_) => "error".to_string()
     };
 
-    println!("{},", a.clone());
+    println!("{},", body.clone());
 
-    let request = AppRequest {
-        path: format!("/{}", url),
-        method: RouteDefinitionMethod::POST,
-        body: Some(a),
-        app_context: None,
-        headers: None
-    };
+    // let request = AppRequest {
+    //     path: format!("/{}", url),
+    //     method: RouteDefinitionMethod::POST,
+    //     body: Some(a),
+    //     app_context: None,
+    //     headers: None
+    // };
+
+    let mut request = AppRequest::new(format!("/{}", url));
+    request.body = Some(body);
+    request.method = RouteDefinitionMethod::POST;
 
     let json = json!({
 	    "database_path": "./database.sqlite"
@@ -87,8 +86,8 @@ async fn post_route(web::Path(url): web::Path<String>, bytes: Bytes) -> impl Res
 
             HttpResponse::Ok().body(response.body.unwrap())
         }
-        Err(_) => {
-
+        Err(error) => {
+            println!("{}", error);
             HttpResponse::Ok().body("error")
         }
     }

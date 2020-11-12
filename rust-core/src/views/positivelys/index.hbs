@@ -373,6 +373,28 @@
                 animation: jello-horizontal .9s both
             }
 
+
+            .menu {
+                position: relative;
+            }
+
+            .menu-items {
+                display: none;
+            }
+
+            .menu-button {
+                background: transparent;
+                border: 0;
+                outline: 0;
+            }
+
+
+            .menu-button:hover + .menu-items, .menu-items:hover {
+                position: absolute;
+                top: 15px;
+                right: 0;
+                display: block;
+            }
         </style>
         <div class="bg-white border-bottom-gray">
             <div class="container py-3">
@@ -405,6 +427,21 @@
                         <li class="my-2 pt-1 p-3 bg-white shadow-sm font-weight-bold">
                             <div class="mt-n2 pb-2 font-12 text-muted font-weight-lighter">
                                 {{fmt_positively_time positively.created_at}}
+
+
+                                <div class="menu float-right clearfix">
+                                    <button class="menu-button text-muted">
+                                        &bull;&bull;&bull;
+                                    </button>
+                                    <ul class="py-2 rounded menu-items shadow bg-white list-unstyled">
+                                        <li class="px-3 py-2">
+                                            <form action="/positivelys/{{id}}/delete" method="POST">
+                                                <input type="submit" class="btn btn-link" value="Delete" />
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </div>
                             {{positively.moment}}
                         </li>

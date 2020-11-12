@@ -5,11 +5,9 @@ use serde_json::Error;
 use routines::models::app_response::{AppResponse};
 use crate::models::positively::Positively;
 use rusqlite::Connection;
-use crate::repositories::positivelys_repository::{create_positively, all_positivelys, remove_positively};
+use crate::repositories::positivelys_repository::{create_positively, all_positivelys, remove_positively, positively_by_id, update_positively};
 use chrono::{Local, Utc};
 use rand::seq::SliceRandom;
-use std::borrow::Borrow;
-
 
 #[derive(Deserialize, Serialize)]
 pub struct IndexViewModel {
@@ -54,7 +52,6 @@ pub struct NewViewModel {
 
 #[route(path = "/positivelys/new")]
 pub async fn new(_app_request: AppRequest) -> NewViewModel {
-    println!("here");
     NewViewModel {
         form: Positively::new()
     }
@@ -70,9 +67,7 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
             create_positively(positvely, &connection);
             app_response_factory::redirect("/positivelys".to_string())
         }
-        Err(err) => {
-            println!("Error: {}", err);
-
+        Err(_) => {
             AppResponse {
                 status_code: 200,
                 body: Some("failure".to_string()),
@@ -89,6 +84,35 @@ pub async fn delete(app_request: AppRequest) -> AppResponse {
     let positively_id = app_request.get_path_param("id").unwrap().parse::<i64>().unwrap();
 
     remove_positively(&connection, positively_id);
+
+    app_response_factory::redirect("/positivelys".to_string())
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct EditViewModel {
+    form: Positively
+}
+
+#[route(path = "/positivelys/{id}/edit", method = "GET")]
+pub async fn edit(app_request: AppRequest) -> EditViewModel {
+    let connection = Connection::open(app_request.app_context.clone().unwrap().database_path).unwrap();
+    let positively_id = app_request.get_path_param("id").unwrap().parse::<i64>().unwrap();
+
+    let positively = positively_by_id(&connection, positively_id).unwrap();
+
+    EditViewModel {
+        form: positively
+    }
+}
+
+#[route(path = "/positivelys/{id}/edit", method = "POST")]
+pub async fn update(app_request: AppRequest) -> AppResponse {
+    let connection = Connection::open(app_request.app_context.clone().unwrap().database_path).unwrap();
+    let positively_id = app_request.get_path_param("id").unwrap().parse::<i64>().unwrap();
+    let mut positively: Positively = serde_json::from_str(app_request.clone().body.unwrap().as_str()).unwrap();
+
+    positively.id = positively_id;
+    update_positively(&connection, positively);
 
     app_response_factory::redirect("/positivelys".to_string())
 }

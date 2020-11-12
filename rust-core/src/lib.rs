@@ -31,6 +31,8 @@ async fn handle_request(app_request_json: String, app_context_json: String) -> S
     app.add_route(controllers::positivelys_controller::index);
     app.add_route(controllers::positivelys_controller::create);
     app.add_route(controllers::positivelys_controller::new);
+    app.add_route(controllers::positivelys_controller::edit);
+    app.add_route(controllers::positivelys_controller::update);
     app.add_route(controllers::positivelys_controller::delete);
     app.start();
 

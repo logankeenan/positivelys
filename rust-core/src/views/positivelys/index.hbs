@@ -399,9 +399,9 @@
         <div class="bg-white border-bottom-gray">
             <div class="container py-3">
                 <div class="row ">
-                    <div class="col-10 ">
+                    <div class="col-10 text-black-50">
                         <a href="/positivelys/new"
-                           class="text-dark px-3 py-2 rounded border text-black-50 d-inline-block w-100">
+                           class="text-decoration-none text-reset px-3 py-2 rounded border d-inline-block w-100">
                             What's positive about today?
                         </a>
                     </div>
@@ -435,10 +435,14 @@
                                     </button>
                                     <ul class="py-2 rounded menu-items shadow bg-white list-unstyled">
                                         <li class="px-3 py-2">
+                                            <a class="btn btn-link" href="/positivelys/{{id}}/edit">Edit</a>
+                                        </li>
+                                        <li class="px-3 py-2">
                                             <form action="/positivelys/{{id}}/delete" method="POST">
                                                 <input type="submit" class="btn btn-link" value="Delete" />
                                             </form>
                                         </li>
+
                                     </ul>
                                 </div>
 

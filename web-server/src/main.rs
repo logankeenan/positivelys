@@ -16,8 +16,6 @@ use actix_web::web::Bytes;
 async fn index(web::Path(url): web::Path<String>) -> impl Responder {
     let request = AppRequest::new(format!("/{}", url));
 
-    println!("url: {}", url);
-
     let json = json!({
 	    "database_path": "./database.sqlite"
     });
@@ -49,16 +47,6 @@ async fn post_route(web::Path(url): web::Path<String>, bytes: Bytes) -> impl Res
         Err(_) => "error".to_string()
     };
 
-    println!("{},", body.clone());
-
-    // let request = AppRequest {
-    //     path: format!("/{}", url),
-    //     method: RouteDefinitionMethod::POST,
-    //     body: Some(a),
-    //     app_context: None,
-    //     headers: None
-    // };
-
     let mut request = AppRequest::new(format!("/{}", url));
     request.body = Some(body);
     request.method = RouteDefinitionMethod::POST;
@@ -67,17 +55,13 @@ async fn post_route(web::Path(url): web::Path<String>, bytes: Bytes) -> impl Res
 	    "database_path": "./database.sqlite"
     });
 
-
-    println!("post_route before make request");
     let response_as_json = make_request(json!(request).to_string(), json.to_string());
-    println!("after post_route before make request");
     let result: Result<AppResponse, Error> = serde_json::from_str(&response_as_json);
     match result {
         Ok(response) => {
             if response.status_code == 302 {
                 let option = response.headers.unwrap().get("Location").unwrap().to_string();
 
-                println!("option: {}", option.to_string());
                 let result1 = HttpResponse::Found()
                     .header(http::header::LOCATION, option.to_string()).finish();
 
@@ -87,8 +71,7 @@ async fn post_route(web::Path(url): web::Path<String>, bytes: Bytes) -> impl Res
             HttpResponse::Ok().body(response.body.unwrap())
         }
         Err(error) => {
-            println!("{}", error);
-            HttpResponse::Ok().body("error")
+            HttpResponse::Ok().body(error.to_string())
         }
     }
 }

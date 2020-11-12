@@ -43,9 +43,42 @@ pub fn all_positivelys(connection: &Connection) -> Vec<Positively> {
 pub fn remove_positively(connection: &Connection, id: i64) {
     let mut result = connection.prepare("delete from positivelys where id = ?1").unwrap();
 
-    let rows = result.execute(params![id]);
+    let _rows = result.execute(params![id]);
+}
 
-    println!("{}", rows.unwrap());
+pub fn update_positively(connection: &Connection, positively: Positively) {
+    let mut result = connection.prepare("update positivelys set moment = ?1, updated_at = ?2 where id = ?3").unwrap();
+
+
+    let _rows = result.execute(params![
+        positively.moment,
+        chrono::Utc::now().timestamp().to_string(),
+        positively.id,
+    ]);
+}
+
+pub fn positively_by_id(connection: &Connection, id :i64) -> Option<Positively> {
+    let mut result = connection.prepare("select id, moment, created_at, updated_at from positivelys where id = ?1").unwrap();
+
+    let rows = result.query_map(params![id], |row| {
+        Ok(Positively {
+            id: row.get(0)?,
+            moment: row.get(1)?,
+            created_at: convert_int_to_datetime(row.get(2)).unwrap(),
+            updated_at: convert_int_to_datetime(row.get(3)),
+        })
+    }).unwrap();
+
+    let positively_result = rows.last().unwrap();
+
+    match positively_result {
+        Ok(positively) => {
+            Some(positively)
+        }
+        Err(_) => {
+            None
+        }
+    }
 }
 
 fn convert_int_to_datetime(result: Result<i64, Error>) -> Option<DateTime<Utc>> {

@@ -17,6 +17,7 @@
 		625EE76A6AA3F1E40D04FD25 /* positivelysTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE20AA43F88E22D3F3960 /* positivelysTests.swift */; };
 		625EEACADF15D9E98598E7D1 /* positivelysUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE2B10F919A36B7F3D796 /* positivelysUITests.swift */; };
 		625EEC2C13DDEFAFBE3EE496 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 625EE44A3D3BC585682472CE /* LaunchScreen.storyboard */; };
+		625EEE6A63442E1090514F3C /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE813401DC03635B6A6AB /* ApplicationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		625EE43184EE88102E90357B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		625EE6E52FBEEB7B51CE1768 /* positivelys.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = positivelys.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		625EE7B8AA5D39E90A511A7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		625EE813401DC03635B6A6AB /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
 		625EE84344F4BD0642C72156 /* AppResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppResponse.swift; sourceTree = "<group>"; };
 		625EE95696A19ABE920D12FF /* positivelysTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = positivelysTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		625EE9BF18893DEAE6C31C2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				625EE0CBFD6B92E7B69A595D /* ViewController.swift */,
 				625EE9D970B9D7CFC24B6723 /* Main.storyboard */,
 				625EE84344F4BD0642C72156 /* AppResponse.swift */,
+				625EE813401DC03635B6A6AB /* ApplicationController.swift */,
 			);
 			path = positivelys;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				625EE5FE79B452F07742414A /* SceneDelegate.swift in Sources */,
 				625EE3636B0B9B3B3694F8A1 /* ViewController.swift in Sources */,
 				625EE4DACF4C0F9F3E737D9A /* AppResponse.swift in Sources */,
+				625EEE6A63442E1090514F3C /* ApplicationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -21,22 +21,42 @@
 {{> page_content}}
 <script src="https://unpkg.com/morphdom@2.6.1/dist/morphdom-umd.min.js"></script>
 <script>
+
+    async function makeWebAppRequest(url, method, bodyAsJson) {
+        let response;
+
+        if (method.toLowerCase() === "get") {
+            response = await fetch(url);
+        } else if (method.toLowerCase() === "post") {
+            response = await fetch(url, {
+                method: 'POST',
+                redirect: 'follow',
+                body: bodyAsJson
+            });
+        }
+
+        const htmlResponse = await response.text();
+        morphdom(document.documentElement, htmlResponse);
+        history.pushState(undefined, undefined, response.url);
+    }
+
+    async function makeAppRequest(url, method = 'GET', body = "") {
+        if (window.webkit) {
+            window.webkit.messageHandlers.makeAppRequest.postMessage({
+                url: url, method: method, body: body
+            });
+        } else {
+            await makeWebAppRequest(url, method, body)
+        }
+    }
+
     document.addEventListener('submit', async function (event) {
-        console.log('here');
         event.preventDefault();
 
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData.entries());
-        const response = await fetch(event.target.action, {
-            method: 'POST',
-            redirect: 'follow',
-            body: JSON.stringify(data)
-        });
-        const htmlResponse = await response.text();
 
-        morphdom(document.documentElement, htmlResponse);
-
-        history.pushState(undefined, undefined, response.url);
+        await makeAppRequest(event.target.action, event.target.method, JSON.stringify(data))
     });
 
     document.addEventListener('click', async function (event) {
@@ -44,26 +64,14 @@
         if (anchorTag.tagName.toLowerCase() === "a") {
             event.preventDefault();
 
-            const response = await fetch(anchorTag.href);
-
-            const htmlResponse = await response.text();
-
-            morphdom(document.documentElement, htmlResponse);
-
-            history.pushState(undefined, undefined, anchorTag.href);
+            await makeAppRequest(anchorTag.href)
         }
     });
 
     window.addEventListener('popstate', async function (event) {
         let url = event.target.location.toString();
 
-        const response = await fetch(url);
-
-        const htmlResponse = await response.text();
-
-        morphdom(document.documentElement, htmlResponse);
-
-        history.pushState(undefined, undefined, url);
+        await makeAppRequest(url)
     });
 
 

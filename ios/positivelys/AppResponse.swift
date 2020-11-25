@@ -6,47 +6,11 @@ import Foundation
 
 public class AppResponse: Codable {
     var body: String?
-    var headers: JSONNull?
-    var statusCode: Int?
+    var headers: Dictionary<String, String>?
+    var status_code: Int?
 
     enum CodingKeys: String, CodingKey {
         case body, headers
-        case statusCode
-    }
-
-    init(body: String?, headers: JSONNull?, statusCode: Int?) {
-        self.body = body
-        self.headers = headers
-        self.statusCode = statusCode
-    }
-}
-
-
-class JSONNull: Codable, Hashable {
-
-    public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
-        return true
-    }
-
-    public var hashValue: Int {
-        return 0
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        // No-op
-    }
-
-    public init() {}
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if !container.decodeNil() {
-            throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encodeNil()
+        case status_code
     }
 }

@@ -14,8 +14,9 @@ use actix_web::web::Bytes;
 
 #[get("{url:.*}")]
 async fn index(web::Path(url): web::Path<String>) -> impl Responder {
-    let request = AppRequest::new(format!("/{}", url));
+    let request = AppRequest::new(format!("http://localhost:3000/{}", url));
 
+    println!("url: {}", url);
     let json = json!({
 	    "database_path": "./database.sqlite"
     });
@@ -47,7 +48,7 @@ async fn post_route(web::Path(url): web::Path<String>, bytes: Bytes) -> impl Res
         Err(_) => "error".to_string()
     };
 
-    let mut request = AppRequest::new(format!("/{}", url));
+    let mut request = AppRequest::new(format!("http://localhost:3000/{}", url));
     request.body = Some(body);
     request.method = RouteDefinitionMethod::POST;
 

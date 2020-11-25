@@ -49,7 +49,8 @@ async fn handle_request(app_request_json: String, app_context_json: String) -> S
             let response= app.handle_route(app_request).await;
             json!(response).to_string()
         }
-        Err(_) => {
+        Err(error) => {
+            println!("error: {}", error);
             "500".to_string()
         }
     }

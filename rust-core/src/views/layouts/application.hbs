@@ -40,11 +40,13 @@
         history.pushState(undefined, undefined, response.url);
     }
 
-    async function makeAppRequest(url, method = 'GET', body = "") {
+    async function makeAppRequest(uri, method = 'GET', body = undefined) {
         if (window.webkit) {
-            window.webkit.messageHandlers.makeAppRequest.postMessage({
-                url: url, method: method, body: body
-            });
+            window.webkit.messageHandlers.makeAppRequest.postMessage(JSON.stringify({
+                uri,
+                method,
+                body
+            }));
         } else {
             await makeWebAppRequest(url, method, body)
         }
@@ -56,7 +58,7 @@
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData.entries());
 
-        await makeAppRequest(event.target.action, event.target.method, JSON.stringify(data))
+        await makeAppRequest(event.target.action, event.target.method.toUpperCase(), JSON.stringify(data))
     });
 
     document.addEventListener('click', async function (event) {
@@ -64,6 +66,7 @@
         if (anchorTag.tagName.toLowerCase() === "a") {
             event.preventDefault();
 
+            console.log('anchorTag.href:', anchorTag.href);
             await makeAppRequest(anchorTag.href)
         }
     });

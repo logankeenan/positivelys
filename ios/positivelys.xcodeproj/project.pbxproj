@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		02FA5272254CBAEA00E378A8 /* librust_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FA5271254CBAE100E378A8 /* librust_ios.a */; };
 		625EE03A57FBE6135AB3C707 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EEC6C70B1C1FB27AF85A2 /* AppDelegate.swift */; };
+		625EE19BFB9FFC7753C2484D /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE22C7A9865B3E1583FC7 /* AppService.swift */; };
 		625EE27258ACDD379DBB53A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 625EE9D970B9D7CFC24B6723 /* Main.storyboard */; };
 		625EE3170999E020B3F17DA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 625EEFC8BA57E4A79EA46B2E /* Assets.xcassets */; };
 		625EE3636B0B9B3B3694F8A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE0CBFD6B92E7B69A595D /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 		625EEACADF15D9E98598E7D1 /* positivelysUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE2B10F919A36B7F3D796 /* positivelysUITests.swift */; };
 		625EEC2C13DDEFAFBE3EE496 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 625EE44A3D3BC585682472CE /* LaunchScreen.storyboard */; };
 		625EEE6A63442E1090514F3C /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE813401DC03635B6A6AB /* ApplicationController.swift */; };
+		625EEEA38A7800959764DB9F /* AppRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE80101D96F2B6F0CD808 /* AppRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,11 +45,13 @@
 		625EE0CBFD6B92E7B69A595D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		625EE19445F1677FE487D1B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		625EE20AA43F88E22D3F3960 /* positivelysTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = positivelysTests.swift; sourceTree = "<group>"; };
+		625EE22C7A9865B3E1583FC7 /* AppService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppService.swift; sourceTree = "<group>"; };
 		625EE2312CCFD7A94EBA9ED0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		625EE2B10F919A36B7F3D796 /* positivelysUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = positivelysUITests.swift; sourceTree = "<group>"; };
 		625EE43184EE88102E90357B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		625EE6E52FBEEB7B51CE1768 /* positivelys.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = positivelys.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		625EE7B8AA5D39E90A511A7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		625EE80101D96F2B6F0CD808 /* AppRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRequest.swift; sourceTree = "<group>"; };
 		625EE813401DC03635B6A6AB /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
 		625EE84344F4BD0642C72156 /* AppResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppResponse.swift; sourceTree = "<group>"; };
 		625EE95696A19ABE920D12FF /* positivelysTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = positivelysTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +136,8 @@
 				625EE9D970B9D7CFC24B6723 /* Main.storyboard */,
 				625EE84344F4BD0642C72156 /* AppResponse.swift */,
 				625EE813401DC03635B6A6AB /* ApplicationController.swift */,
+				625EE80101D96F2B6F0CD808 /* AppRequest.swift */,
+				625EE22C7A9865B3E1583FC7 /* AppService.swift */,
 			);
 			path = positivelys;
 			sourceTree = "<group>";
@@ -275,6 +281,8 @@
 				625EE3636B0B9B3B3694F8A1 /* ViewController.swift in Sources */,
 				625EE4DACF4C0F9F3E737D9A /* AppResponse.swift in Sources */,
 				625EEE6A63442E1090514F3C /* ApplicationController.swift in Sources */,
+				625EEEA38A7800959764DB9F /* AppRequest.swift in Sources */,
+				625EE19BFB9FFC7753C2484D /* AppService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

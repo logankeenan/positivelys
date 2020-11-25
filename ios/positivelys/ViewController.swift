@@ -18,14 +18,15 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler {
 
     weak var delegate: ViewControllerDelegate?
     var webView: WKWebView!
-
+    var uri: String = ""
     private var html_markup: String!
 
 
 
-    public convenience init(html_markup: String) {
+    public convenience init(html_markup: String, uri: String) {
         self.init()
         self.html_markup = html_markup
+        self.uri = uri
     }
 
     override func loadView() {
@@ -40,6 +41,11 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler {
         super.viewDidLoad()
 
         webView.loadHTMLString(self.html_markup, baseURL: URL(string: AppService.hostName))
+    }
+
+    public func reload(html_markup: String) {
+        self.html_markup = html_markup;
+        webView.loadHTMLString(html_markup, baseURL: URL(string: AppService.hostName))
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {

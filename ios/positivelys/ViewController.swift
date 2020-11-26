@@ -14,7 +14,7 @@ protocol ViewControllerDelegate: class {
     func makeAppRequest(_ viewController: ViewController, request_as_json: String)
 }
 
-class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler {
+class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WKNavigationDelegate {
 
     weak var delegate: ViewControllerDelegate?
     var webView: WKWebView!
@@ -34,6 +34,7 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler {
         webConfiguration.userContentController.add(self, name: "makeAppRequest")
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
+        webView.navigationDelegate = self
         view = webView
     }
 
@@ -41,6 +42,11 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler {
         super.viewDidLoad()
 
         webView.loadHTMLString(self.html_markup, baseURL: URL(string: AppService.hostName))
+
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.title = webView.title
     }
 
     public func reload(html_markup: String) {

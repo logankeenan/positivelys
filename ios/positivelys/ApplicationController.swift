@@ -21,18 +21,23 @@ class ApplicationController: UINavigationController {
     }
 
     private func handlePostRedirectGet(new_uri: String, response: AppResponse) {
-        var currentController = viewControllers[viewControllers.endIndex] as! ViewController;
+        var currentController = getCurrentController();
 
         while (currentController.uri != new_uri) {
             popViewController(animated: true)
-            currentController = viewControllers[viewControllers.endIndex] as! ViewController;
+            currentController = getCurrentController();
         }
 
-        (viewControllers[0] as! ViewController).reload(html_markup: (response.body)!)
+        getCurrentController().reload(html_markup: (response.body)!)
+    }
+
+    private func getCurrentController() -> ViewController {
+        viewControllers[viewControllers.count - 1] as! ViewController
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         let request = AppRequest(uri: "\(AppService.hostName)/positivelys", method: "GET")
         handle_request_response(request: request)
     }

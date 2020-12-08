@@ -5,19 +5,26 @@ use std::ffi::{CString, CStr};
 use jni::JNIEnv;
 use jni::objects::{JObject, JString};
 use jni::sys::{jstring};
-use rust_core::database_test;
+use rust_core::make_request;
 
 #[no_mangle]
-pub unsafe extern fn Java_com_cultivatedsoftware_positivelys_MainActivity_calldatabase(env: JNIEnv, _: JObject, j_recipient: JString) -> jstring {
-    let database_path_c_string = CString::from(
+pub unsafe extern fn Java_com_cultivatedsoftware_positivelys_MainActivity_makeapprequest(env: JNIEnv, _: JObject, j_app_request: JString, j_app_context: JString) -> jstring {
+    let app_request_c_string = CString::from(
         CStr::from_ptr(
-            env.get_string(j_recipient).unwrap().as_ptr()
+            env.get_string(j_app_request).unwrap().as_ptr()
         )
     );
-    let database_path = database_path_c_string.to_str().unwrap().to_string();
+    let app_request = app_request_c_string.to_str().unwrap().to_string();
 
-    let database_result = database_test(database_path);
+    let app_context_c_string = CString::from(
+        CStr::from_ptr(
+            env.get_string(j_app_context).unwrap().as_ptr()
+        )
+    );
+    let app_context = app_context_c_string.to_str().unwrap().to_string();
 
-    let output = env.new_string(database_result.to_owned()).unwrap();
+    let response_as_json = make_request(app_request, app_context);
+
+    let output = env.new_string(response_as_json.to_owned()).unwrap();
     output.into_inner()
 }

@@ -14,7 +14,7 @@
             border-bottom: 1px solid #E6E6E6;
         }
 
-        .ios-webview .main-nav {
+        .ios-webview .main-nav, .android-webview .main-nav {
             display: none;
         }
     </style>
@@ -24,6 +24,9 @@
 <script >
     if (window.webkit) {
         document.body.classList.add("ios-webview")
+    }
+    if (window.Android) {
+        document.body.classList.add("android-webview")
     }
 </script>
 <nav class="main-nav navbar bg-white sticky-top border-bottom-gray">

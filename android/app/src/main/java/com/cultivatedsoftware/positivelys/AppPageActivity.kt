@@ -35,6 +35,10 @@ class AppPageActivity : AppCompatActivity() {
                 setReorderingAllowed(true)
                 add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
             }
+
+            supportFragmentManager.addOnBackStackChangedListener {
+                (supportFragmentManager.fragments.first() as WebPageFragment).setTitle()
+            }
         }
     }
 

@@ -86,7 +86,7 @@ pub async fn delete(app_request: AppRequest) -> AppResponse {
 
     remove_positively(&connection, positively_id);
 
-    app_response_factory::redirect("/positivelys".to_string())
+    app_response_factory::redirect("https://positivelys.com/positivelys".to_string())
 }
 
 #[derive(Deserialize, Serialize)]
@@ -115,6 +115,6 @@ pub async fn update(app_request: AppRequest) -> AppResponse {
     positively.id = positively_id;
     update_positively(&connection, positively);
 
-    app_response_factory::redirect("/positivelys".to_string())
+    app_response_factory::redirect("https://positivelys.com/positivelys".to_string())
 }
 

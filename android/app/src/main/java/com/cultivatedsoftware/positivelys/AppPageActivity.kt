@@ -45,11 +45,8 @@ class AppPageActivity : AppCompatActivity() {
             if (wasRedirect) {
                 supportFragmentManager.popBackStack()
 
-                val previousFragmentAfterPopBackStack =
-                    supportFragmentManager.fragments.lastIndex - 1
-
                 val fragmentUrl =
-                    (supportFragmentManager.fragments.get(previousFragmentAfterPopBackStack) as WebPageFragment).fragmentUrl
+                    (supportFragmentManager.fragments.get(getPreviousFragmentIndex()) as WebPageFragment).fragmentUrl
 
                 if (fragmentUrl == url) {
                     supportFragmentManager.commit {
@@ -71,5 +68,16 @@ class AppPageActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun getPreviousFragmentIndex(): Int {
+        var previousFragmentAfterPopBackStack = 0
+        val sizeIsOneBecauseTheCurrentItemWillBePopped = 1
+
+        if (supportFragmentManager.fragments.size != sizeIsOneBecauseTheCurrentItemWillBePopped) {
+            previousFragmentAfterPopBackStack =
+                supportFragmentManager.fragments.lastIndex - 1
+        }
+        return previousFragmentAfterPopBackStack
     }
 }

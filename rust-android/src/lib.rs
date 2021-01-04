@@ -8,7 +8,7 @@ use jni::sys::{jstring};
 use rust_core::make_request;
 
 #[no_mangle]
-pub unsafe extern fn Java_com_cultivatedsoftware_positivelys_MainActivity_makeapprequest(env: JNIEnv, _: JObject, j_app_request: JString, j_app_context: JString) -> jstring {
+pub unsafe extern fn Java_com_cultivatedsoftware_positivelys_services_AppService_makeapprequest(env: JNIEnv, _: JObject, j_app_request: JString, j_app_context: JString) -> jstring {
     let app_request_c_string = CString::from(
         CStr::from_ptr(
             env.get_string(j_app_request).unwrap().as_ptr()

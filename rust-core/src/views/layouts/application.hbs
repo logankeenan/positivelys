@@ -58,6 +58,12 @@
                 method,
                 body
             }));
+        } if (window.Android) {
+            window.Android.makeAppRequest(JSON.stringify({
+                uri,
+                method,
+                body
+            }));
         } else {
             await makeWebAppRequest(uri, method, body)
         }
@@ -77,7 +83,6 @@
         if (anchorTag.tagName.toLowerCase() === "a") {
             event.preventDefault();
 
-            console.log('anchorTag.href:', anchorTag.href);
             await makeAppRequest(anchorTag.href)
         }
     });

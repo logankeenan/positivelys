@@ -25,6 +25,7 @@ use routines::models::app_request::{AppRequest, AppContext};
 use serde_json::Error;
 use futures::executor::block_on;
 use crate::repositories::database::{create_database, run_migrations};
+use std::collections::HashMap;
 
 async fn handle_request(app_request_json: String, app_context_json: String) -> String {
     let mut app = App::new();
@@ -46,7 +47,22 @@ async fn handle_request(app_request_json: String, app_context_json: String) -> S
     match app_request_result {
         Ok(mut app_request) => {
             app_request.app_context = Some(app_context);
-            let response= app.handle_route(app_request).await;
+            let request_uri = app_request.uri.to_string();
+            let mut response = app.handle_route(app_request).await;
+
+            match response.headers {
+                None => {
+                    let mut headers = HashMap::new();
+                    headers.insert("Content-Location".to_string(), request_uri);
+                    response.headers = Some(headers);
+
+                }
+                Some(ref mut headers) => {
+                    headers.insert("Content-Location".to_string(), request_uri);
+                }
+            }
+
+
             json!(response).to_string()
         }
         Err(error) => {

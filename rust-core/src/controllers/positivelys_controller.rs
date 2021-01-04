@@ -8,6 +8,7 @@ use rusqlite::Connection;
 use crate::repositories::positivelys_repository::{create_positively, all_positivelys, remove_positively, positively_by_id, update_positively};
 use chrono::{Local, Utc};
 use rand::seq::SliceRandom;
+use std::ops::Deref;
 
 #[derive(Deserialize, Serialize)]
 pub struct IndexViewModel {
@@ -65,7 +66,7 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
     match result {
         Ok(positvely) => {
             create_positively(positvely, &connection);
-            app_response_factory::redirect("/positivelys".to_string())
+            app_response_factory::redirect("https://positivelys.com/positivelys".to_string())
         }
         Err(_) => {
             AppResponse {

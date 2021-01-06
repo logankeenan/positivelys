@@ -36,6 +36,7 @@ class WebPageFragment : Fragment(R.layout.fragment_web_page) {
         // Inflate the layout for this fragment
         val inflate = inflater.inflate(R.layout.fragment_web_page, container, false)
 
+        WebView.setWebContentsDebuggingEnabled(true)
 
         var databasePath = inflate.context.packageManager.getPackageInfo(
             inflate.context.packageName,

@@ -59,7 +59,7 @@ class WebPageFragment : Fragment(R.layout.fragment_web_page) {
         webView.webViewClient = webViewClient
         webView.settings.javaScriptEnabled = true
         webView.loadDataWithBaseURL(
-            "https://positivelys.com",
+            "file:///android_asset/",
             body,
             "text/html",
             "base64",

@@ -41,7 +41,7 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        webView.loadHTMLString(self.html_markup, baseURL: URL(string: AppService.hostName))
+        webView.loadHTMLString(self.html_markup, baseURL: Bundle.main.bundleURL)
 
     }
 
@@ -51,7 +51,7 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
 
     public func reload(html_markup: String) {
         self.html_markup = html_markup;
-        webView.loadHTMLString(html_markup, baseURL: URL(string: AppService.hostName))
+        webView.loadHTMLString(html_markup, baseURL: Bundle.main.bundleURL)
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {

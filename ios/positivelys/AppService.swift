@@ -28,14 +28,10 @@ public class AppService {
 
         if response?.status_code == 302 {
             let location: String? = response?.headers?["Location"]
-            let request = AppRequest(uri: "\(AppService.hostName)\(location!)", method: "GET")
+            let request = AppRequest(uri: "\(location!)", method: "GET")
             return make_request(appRequest: request)
         }
 
-        if ((response?.headers) == nil) {
-            response?.headers = Dictionary<String, String>()
-            response?.headers!["Content-Location"] = appRequest.uri
-        }
         return response!;
     }
 

@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/logankeenan/positivelys#readme",
   "dependencies": {
-    "jquery": "^3.5.1"
+    "bootstrap": "^4.5.3",
+    "jquery": "^3.5.1",
+    "morphdom": "^2.6.1",
+    "popper.js": "^1.16.1"
   }
 }

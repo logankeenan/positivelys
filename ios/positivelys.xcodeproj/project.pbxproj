@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		028C114D25A6375E009C0620 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 028C114C25A6375E009C0620 /* assets */; };
 		02FA5272254CBAEA00E378A8 /* librust_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FA5271254CBAE100E378A8 /* librust_ios.a */; };
 		625EE03A57FBE6135AB3C707 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EEC6C70B1C1FB27AF85A2 /* AppDelegate.swift */; };
 		625EE19BFB9FFC7753C2484D /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE22C7A9865B3E1583FC7 /* AppService.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		028C114C25A6375E009C0620 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../../assets; sourceTree = "<group>"; };
 		02FA5271254CBAE100E378A8 /* librust_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librust_ios.a; path = "rust-ios/libs/librust_ios.a"; sourceTree = "<group>"; };
 		625EE024A861FA2F8474D0C4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		625EE0CBFD6B92E7B69A595D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 		625EE671C6C5624307147A96 /* positivelys */ = {
 			isa = PBXGroup;
 			children = (
+				028C114C25A6375E009C0620 /* assets */,
 				625EE43184EE88102E90357B /* Info.plist */,
 				625EEFC8BA57E4A79EA46B2E /* Assets.xcassets */,
 				625EEC6C70B1C1FB27AF85A2 /* AppDelegate.swift */,
@@ -249,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				625EE3170999E020B3F17DA6 /* Assets.xcassets in Resources */,
+				028C114D25A6375E009C0620 /* assets in Resources */,
 				625EEC2C13DDEFAFBE3EE496 /* LaunchScreen.storyboard in Resources */,
 				625EE27258ACDD379DBB53A0 /* Main.storyboard in Resources */,
 			);

@@ -15,8 +15,10 @@ mkdir assets/static/css
 cp node_modules/bootstrap/dist/css/bootstrap.css assets/static/css
 
 #build scss
-
 sass app/scss/styles.scss assets/app/css/styles.css
+
+# copy over fonts
+cp -rf app/fonts assets/app/
 
 # copy over assets to Android
 rm -rf android/app/src/main/assets/*

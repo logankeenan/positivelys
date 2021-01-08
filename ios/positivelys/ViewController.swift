@@ -43,6 +43,9 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
 
         webView.loadHTMLString(self.html_markup, baseURL: Bundle.main.bundleURL)
 
+
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "Nunito-Bold", size: 18)!]
+        self.navigationController?.navigationBar.titleTextAttributes = attributes
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

@@ -6,33 +6,41 @@ import UIKit
 
 class ApplicationController: UINavigationController {
     private func handle_request_response(request: AppRequest) {
-        let response = AppService().make_request(appRequest: request)
+        var response = AppService().make_request(appRequest: request)
+        var wasRedirected = false
+
+        if response.status_code == 302 {
+            wasRedirected = true
+            let location: String? = response.headers?["Location"]
+            let request = AppRequest(uri: "\(location!)", method: "GET")
+            response = AppService().make_request(appRequest: request)
+        }
         let new_uri: String = response.headers!["Content-Location"]!
-        let controller = ViewController(html_markup: (response.body)!, uri: new_uri)
-        controller.delegate = self
 
-        if (request.method == "POST") {
-            //TODO what about POST w/ validation error?
-
-            handlePostRedirectGet(new_uri: new_uri, response: response)
+        if wasRedirected && getPreviousController().uri == new_uri {
+            popViewController(animated: true)
+            getCurrentController().reload(html_markup: (response.body)!)
+        } else if wasRedirected {
+            let controller = ViewController(html_markup: (response.body)!, uri: new_uri)
+            controller.delegate = self
+            popViewController(animated: false)
+            pushViewController(controller, animated: true)
         } else {
+            let controller = ViewController(html_markup: (response.body)!, uri: new_uri)
+            controller.delegate = self
             pushViewController(controller, animated: true)
         }
     }
 
-    private func handlePostRedirectGet(new_uri: String, response: AppResponse) {
-        var currentController = getCurrentController();
-
-        while (currentController.uri != new_uri) {
-            popViewController(animated: true)
-            currentController = getCurrentController();
-        }
-
-        getCurrentController().reload(html_markup: (response.body)!)
-    }
-
     private func getCurrentController() -> ViewController {
         viewControllers[viewControllers.count - 1] as! ViewController
+    }
+
+    private func getPreviousController() -> ViewController {
+        if viewControllers.count == 1 {
+            return viewControllers[0] as! ViewController
+        }
+        return viewControllers[viewControllers.count - 2] as! ViewController
     }
 
     override func viewDidLoad() {

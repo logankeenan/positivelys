@@ -26,12 +26,6 @@ public class AppService {
 
         let response: AppResponse? = try? JSONDecoder().decode(AppResponse.self, from: app_response_as_json.data(using: .utf8)!)
 
-        if response?.status_code == 302 {
-            let location: String? = response?.headers?["Location"]
-            let request = AppRequest(uri: "\(location!)", method: "GET")
-            return make_request(appRequest: request)
-        }
-
         return response!;
     }
 

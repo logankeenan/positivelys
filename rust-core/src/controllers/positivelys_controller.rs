@@ -66,7 +66,15 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
     match result {
         Ok(positvely) => {
             create_positively(positvely, &connection);
-            app_response_factory::redirect("https://positivelys.com/positivelys".to_string())
+
+
+            let positivelys = all_positivelys(&connection);
+            let option = positivelys.get(0).unwrap().to_owned();
+
+            let url = format!("https://positivelys.com/positivelys/{}/edit", option.id);
+            app_response_factory::redirect(url.to_string())
+
+            // app_response_factory::redirect("https://positivelys.com/positivelys".to_string())
         }
         Err(_) => {
             AppResponse {

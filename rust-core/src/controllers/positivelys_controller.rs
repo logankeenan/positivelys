@@ -4,11 +4,12 @@ use routines::factories::app_response_factory;
 use serde_json::Error;
 use routines::models::app_response::{AppResponse};
 use crate::models::positively::Positively;
-use rusqlite::Connection;
-use crate::repositories::positivelys_repository::{create_positively, all_positivelys, remove_positively, positively_by_id, update_positively};
+// use crate::repositories::positivelys_repository::{create_positively, all_positivelys, remove_positively, positively_by_id, update_positively};
 use chrono::{Local, Utc};
 use rand::seq::SliceRandom;
 use std::ops::Deref;
+use crate::repositories::positivelys_repository::{all_positivelys_v2, create_positively_v2};
+use crate::repositories::database::establish_connection;
 
 #[derive(Deserialize, Serialize)]
 pub struct IndexViewModel {
@@ -19,8 +20,8 @@ pub struct IndexViewModel {
 
 #[route(path = "/positivelys")]
 pub async fn index(app_request: AppRequest) -> IndexViewModel {
-    let connection = Connection::open(app_request.app_context.unwrap().database_path).unwrap();
-    let positivelys = all_positivelys(&connection);
+    let connection = establish_connection(app_request.app_context.unwrap().database_path);
+    let positivelys = all_positivelys_v2(&connection);
 
     let todays_date = Utc::now().with_timezone(&Local).date();
     let todays_total = positivelys.iter().filter(|positively| {
@@ -61,20 +62,20 @@ pub async fn new(_app_request: AppRequest) -> NewViewModel {
 #[route(path = "/positivelys", method = "POST")]
 pub async fn create(app_request: AppRequest) -> AppResponse {
     let result: Result<Positively, Error> = serde_json::from_str(app_request.clone().body.unwrap().as_str());
-    let connection = Connection::open(app_request.app_context.unwrap().database_path).unwrap();
+    let connection = establish_connection(app_request.app_context.unwrap().database_path);
 
     match result {
         Ok(positvely) => {
-            create_positively(positvely, &connection);
+            create_positively_v2(positvely, &connection);
 
 
-            let positivelys = all_positivelys(&connection);
-            let option = positivelys.get(0).unwrap().to_owned();
+            // let positivelys = all_positivelys(&connection);
+            // let option = positivelys.get(0).unwrap().to_owned();
+            //
+            // let url = format!("https://positivelys.com/positivelys/{}/edit", option.id);
+            // app_response_factory::redirect(url.to_string())
 
-            let url = format!("https://positivelys.com/positivelys/{}/edit", option.id);
-            app_response_factory::redirect(url.to_string())
-
-            // app_response_factory::redirect("https://positivelys.com/positivelys".to_string())
+            app_response_factory::redirect("https://positivelys.com/positivelys".to_string())
         }
         Err(_) => {
             AppResponse {
@@ -86,43 +87,43 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
         }
     }
 }
-
-#[route(path = "/positivelys/{id}/delete", method = "POST")]
-pub async fn delete(app_request: AppRequest) -> AppResponse {
-    let connection = Connection::open(app_request.app_context.clone().unwrap().database_path).unwrap();
-    let positively_id = app_request.get_path_param("id").unwrap().parse::<i64>().unwrap();
-
-    remove_positively(&connection, positively_id);
-
-    app_response_factory::redirect("https://positivelys.com/positivelys".to_string())
-}
-
-#[derive(Deserialize, Serialize)]
-pub struct EditViewModel {
-    form: Positively
-}
-
-#[route(path = "/positivelys/{id}/edit", method = "GET")]
-pub async fn edit(app_request: AppRequest) -> EditViewModel {
-    let connection = Connection::open(app_request.app_context.clone().unwrap().database_path).unwrap();
-    let positively_id = app_request.get_path_param("id").unwrap().parse::<i64>().unwrap();
-
-    let positively = positively_by_id(&connection, positively_id).unwrap();
-
-    EditViewModel {
-        form: positively
-    }
-}
-
-#[route(path = "/positivelys/{id}/edit", method = "POST")]
-pub async fn update(app_request: AppRequest) -> AppResponse {
-    let connection = Connection::open(app_request.app_context.clone().unwrap().database_path).unwrap();
-    let positively_id = app_request.get_path_param("id").unwrap().parse::<i64>().unwrap();
-    let mut positively: Positively = serde_json::from_str(app_request.clone().body.unwrap().as_str()).unwrap();
-
-    positively.id = positively_id;
-    update_positively(&connection, positively);
-
-    app_response_factory::redirect("https://positivelys.com/positivelys".to_string())
-}
+//
+// #[route(path = "/positivelys/{id}/delete", method = "POST")]
+// pub async fn delete(app_request: AppRequest) -> AppResponse {
+//     let connection = Connection::open(app_request.app_context.clone().unwrap().database_path).unwrap();
+//     let positively_id = app_request.get_path_param("id").unwrap().parse::<i64>().unwrap();
+//
+//     remove_positively(&connection, positively_id);
+//
+//     app_response_factory::redirect("https://positivelys.com/positivelys".to_string())
+// }
+//
+// #[derive(Deserialize, Serialize)]
+// pub struct EditViewModel {
+//     form: Positively
+// }
+//
+// #[route(path = "/positivelys/{id}/edit", method = "GET")]
+// pub async fn edit(app_request: AppRequest) -> EditViewModel {
+//     let connection = Connection::open(app_request.app_context.clone().unwrap().database_path).unwrap();
+//     let positively_id = app_request.get_path_param("id").unwrap().parse::<i64>().unwrap();
+//
+//     let positively = positively_by_id(&connection, positively_id).unwrap();
+//
+//     EditViewModel {
+//         form: positively
+//     }
+// }
+//
+// #[route(path = "/positivelys/{id}/edit", method = "POST")]
+// pub async fn update(app_request: AppRequest) -> AppResponse {
+//     let connection = Connection::open(app_request.app_context.clone().unwrap().database_path).unwrap();
+//     let positively_id = app_request.get_path_param("id").unwrap().parse::<i64>().unwrap();
+//     let mut positively: Positively = serde_json::from_str(app_request.clone().body.unwrap().as_str()).unwrap();
+//
+//     positively.id = positively_id;
+//     update_positively(&connection, positively);
+//
+//     app_response_factory::redirect("https://positivelys.com/positivelys".to_string())
+// }
 

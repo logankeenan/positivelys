@@ -1,4 +1,10 @@
 #[macro_use]
+extern crate diesel;
+
+#[macro_use]
+extern crate diesel_migrations;
+
+#[macro_use]
 extern crate serde_derive;
 
 // TODO - I need to think of a way to not have to do this
@@ -19,12 +25,13 @@ mod controllers;
 mod repositories;
 mod models;
 mod views;
+mod schema;
 
 use routines::App;
 use routines::models::app_request::{AppRequest, AppContext};
 use serde_json::Error;
 use futures::executor::block_on;
-use crate::repositories::database::{create_database, run_migrations};
+use crate::repositories::database::{establish_connection, run_migrations};
 use std::collections::HashMap;
 
 async fn handle_request(app_request_json: String, app_context_json: String) -> String {
@@ -32,16 +39,16 @@ async fn handle_request(app_request_json: String, app_context_json: String) -> S
     app.add_route(controllers::positivelys_controller::index);
     app.add_route(controllers::positivelys_controller::create);
     app.add_route(controllers::positivelys_controller::new);
-    app.add_route(controllers::positivelys_controller::edit);
-    app.add_route(controllers::positivelys_controller::update);
-    app.add_route(controllers::positivelys_controller::delete);
+    // app.add_route(controllers::positivelys_controller::edit);
+    // app.add_route(controllers::positivelys_controller::update);
+    // app.add_route(controllers::positivelys_controller::delete);
     app.start();
 
     let app_request_result: Result<AppRequest, Error> = serde_json::from_str(&app_request_json);
     let app_context_result: Result<AppContext, Error> = serde_json::from_str(&app_context_json);
 
     let app_context = app_context_result.unwrap();
-    let connection = create_database(app_context.database_path.clone());
+    let connection = establish_connection(app_context.database_path.clone());
     run_migrations(&connection);
 
     match app_request_result {

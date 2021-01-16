@@ -1,12 +1,13 @@
-use rusqlite::{Connection};
-use crate::repositories::positivelys_repository::create_positively_table;
 
-pub fn create_database(database_path: String) -> Connection {
-    let connection = Connection::open(database_path).unwrap();
+// use crate::repositories::positivelys_repository::create_positively_table;
+use diesel::{SqliteConnection, Connection};
 
-    connection
+embed_migrations!("./migrations");
+
+pub fn establish_connection(database_path: String) -> SqliteConnection {
+        SqliteConnection::establish(&database_path).unwrap()
 }
 
-pub fn run_migrations(connection: &Connection) {
-    create_positively_table(connection);
+pub fn run_migrations(connection: &SqliteConnection) {
+    embedded_migrations::run(connection);
 }

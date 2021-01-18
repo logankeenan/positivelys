@@ -1,6 +1,6 @@
 use chrono::{DateTime, Utc};
 
-pub fn i64_zero() -> i64 {
+pub fn i32_zero() -> i32 {
     0
 }
 

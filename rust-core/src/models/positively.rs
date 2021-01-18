@@ -3,8 +3,8 @@ use crate::models::default_properties::current_date_time;
 
 #[derive(Deserialize, Serialize)]
 pub struct Positively {
-    #[serde(default = "crate::models::default_properties::i64_zero")]
-    pub id: i64,
+    #[serde(default = "crate::models::default_properties::i32_zero")]
+    pub id: i32,
     pub moment: String,
 
     #[serde(skip_deserializing)]

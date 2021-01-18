@@ -1671,14 +1671,12 @@ dependencies = [
  "handlebars",
  "http",
  "http-serde",
- "include_dir",
  "routines_macros",
  "serde",
  "serde_derive",
  "serde_json",
  "strum",
  "strum_macros",
- "wasm-bindgen",
 ]
 
 [[package]]

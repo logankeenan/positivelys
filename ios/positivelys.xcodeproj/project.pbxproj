@@ -45,6 +45,7 @@
 /* Begin PBXFileReference section */
 		028C114C25A6375E009C0620 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../../assets; sourceTree = "<group>"; };
 		02A3919825A89FCD003E4E3A /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; path = "Nunito-Bold.ttf"; sourceTree = "<group>"; };
+		02D6407B25B64BF30012B8AA /* positivelys.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = positivelys.entitlements; sourceTree = "<group>"; };
 		02FA5271254CBAE100E378A8 /* librust_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librust_ios.a; path = "rust-ios/libs/librust_ios.a"; sourceTree = "<group>"; };
 		625EE024A861FA2F8474D0C4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		625EE0CBFD6B92E7B69A595D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -141,6 +142,7 @@
 		625EE671C6C5624307147A96 /* positivelys */ = {
 			isa = PBXGroup;
 			children = (
+				02D6407B25B64BF30012B8AA /* positivelys.entitlements */,
 				02A3919625A89F35003E4E3A /* fonts */,
 				028C114C25A6375E009C0620 /* assets */,
 				625EE43184EE88102E90357B /* Info.plist */,
@@ -372,6 +374,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = positivelys/positivelys.entitlements;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = PSXUQ4V6VZ;
 				HEADER_SEARCH_PATHS = "/Users/logan/Developer/positivelys/ios/rust-ios/include";
 				INFOPLIST_FILE = positivelys/Info.plist;
@@ -380,7 +384,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/rust-ios/libs",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cultivatedsoftware.positivelys;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cultivatedsoftware.positivelys;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/logan/Developer/positivelys/ios/rust-ios/include/rust-ios.h";
 				SWIFT_VERSION = 5.0;
@@ -393,6 +397,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = positivelys/positivelys.entitlements;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = PSXUQ4V6VZ;
 				HEADER_SEARCH_PATHS = "/Users/logan/Developer/positivelys/ios/rust-ios/include";
 				INFOPLIST_FILE = positivelys/Info.plist;
@@ -401,7 +407,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/rust-ios/libs",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cultivatedsoftware.positivelys;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cultivatedsoftware.positivelys;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/logan/Developer/positivelys/ios/rust-ios/include/rust-ios.h";
 				SWIFT_VERSION = 5.0;

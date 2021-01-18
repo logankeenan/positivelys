@@ -4,11 +4,9 @@ use routines::factories::app_response_factory;
 use serde_json::Error;
 use routines::models::app_response::{AppResponse};
 use crate::models::positively::Positively;
-// use crate::repositories::positivelys_repository::{create_positively, all_positivelys, remove_positively, positively_by_id, update_positively};
 use chrono::{Local, Utc};
 use rand::seq::SliceRandom;
-use std::ops::Deref;
-use crate::repositories::positivelys_repository::{all_positivelys_v2, create_positively_v2, positively_by_id, update_positively, remove_positively};
+use crate::repositories::positivelys_repository::{all_positivelys, create_positively, positively_by_id, update_positively, remove_positively};
 use crate::repositories::database::establish_connection;
 
 #[derive(Deserialize, Serialize)]
@@ -21,7 +19,7 @@ pub struct IndexViewModel {
 #[route(path = "/positivelys")]
 pub async fn index(app_request: AppRequest) -> IndexViewModel {
     let connection = establish_connection(app_request.app_context.unwrap().database_path);
-    let positivelys = all_positivelys_v2(&connection);
+    let positivelys = all_positivelys(&connection);
 
     let todays_date = Utc::now().with_timezone(&Local).date();
     let todays_total = positivelys.iter().filter(|positively| {
@@ -66,7 +64,7 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
 
     match result {
         Ok(positvely) => {
-            create_positively_v2(positvely, &connection);
+            create_positively(positvely, &connection);
 
 
             // let positivelys = all_positivelys(&connection);

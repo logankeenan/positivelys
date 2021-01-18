@@ -9,5 +9,5 @@ pub fn establish_connection(database_path: String) -> SqliteConnection {
 }
 
 pub fn run_migrations(connection: &SqliteConnection) {
-    embedded_migrations::run(connection);
+    embedded_migrations::run(connection).unwrap();
 }

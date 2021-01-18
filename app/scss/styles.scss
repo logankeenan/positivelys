@@ -22,3 +22,9 @@ $primary: #09CBCB;
 $link-color: #212529;
 @import '../../node_modules/bootstrap/scss/bootstrap';
 
+
+// hack because ios will hold the hover colors on button until the user presses somewhere else.
+.btn:hover {
+  background-color: inherit;
+  color: inherit;
+}

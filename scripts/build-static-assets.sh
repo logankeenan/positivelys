@@ -17,6 +17,9 @@ cp node_modules/bootstrap/dist/css/bootstrap.css assets/static/css
 #build scss
 sass app/scss/styles.scss assets/app/css/styles.css
 
+# copy over js
+cp -rf app/js assets/app/
+
 # copy over fonts
 cp -rf app/fonts assets/app/
 

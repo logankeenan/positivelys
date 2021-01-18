@@ -2,7 +2,7 @@ use chrono::NaiveDateTime;
 use crate::schema::media_files::columns as media_files_columns;
 use crate::schema::media_files::table as media_files_table;
 use crate::models::media_file::MediaFile;
-use diesel::{SqliteConnection, RunQueryDsl, Connection, QueryDsl, ExpressionMethods, Associations, Identifiable};
+use diesel::{SqliteConnection, RunQueryDsl, Connection, QueryDsl, ExpressionMethods, Associations, Identifiable, QueryResult};
 use crate::repositories::positivelys_repository::{current_naive_date_time, date_time_from_naive, date_time_from_naive_option};
 use crate::schema::*;
 use diesel::result::Error;
@@ -77,4 +77,17 @@ pub fn insert_media_file(media_file: MediaFile, connection: &SqliteConnection) -
     });
 
     result.unwrap()
+}
+
+pub fn media_file_by_positively(positively_id: i32, connection: &SqliteConnection) -> Option<MediaFile> {
+    let result: QueryResult<MediaFileDAO> = media_files_table
+        .filter(media_files_columns::positively_id.eq(positively_id))
+        .first(connection);
+
+    match result {
+        Ok(media_file_dao) => {
+            Some(media_file_dao.to_media_file())
+        }
+        Err(_) => None
+    }
 }

@@ -8,7 +8,7 @@ use chrono::{Local, Utc};
 use rand::seq::SliceRandom;
 use crate::repositories::positivelys_repository::{all_positivelys, create_positively, positively_by_id, update_positively, remove_positively};
 use crate::repositories::database::establish_connection;
-use crate::services::media_files_service::create_media_file;
+use crate::services::media_files_service::{create_media_file, remove_media_file_file};
 
 #[derive(Deserialize, Serialize)]
 pub struct IndexViewModel {
@@ -116,7 +116,9 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
 pub async fn delete(app_request: AppRequest) -> AppResponse {
     let connection = establish_connection(app_request.app_context.clone().unwrap().database_path);
     let positively_id = app_request.get_path_param("id").unwrap().parse::<i32>().unwrap();
+    let local_files_path = app_request.app_context.clone().unwrap().local_files_path;
 
+    remove_media_file_file(positively_id, &connection, local_files_path);
     remove_positively(&connection, positively_id);
 
     app_response_factory::redirect("https://positivelys.com/positivelys".to_string())

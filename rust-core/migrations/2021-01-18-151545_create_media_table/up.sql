@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS media_files
     file_extension TEXT not null,
     created_at int  NOT NULL,
     updated_at int,
-    FOREIGN KEY(positively_id) REFERENCES positivelys(id)
+    FOREIGN KEY(positively_id) REFERENCES positivelys(id) on delete cascade
 )

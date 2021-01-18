@@ -23,6 +23,7 @@ extern crate handlebars;
 
 mod controllers;
 mod repositories;
+mod services;
 mod models;
 mod views;
 mod schema;

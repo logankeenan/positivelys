@@ -2,10 +2,15 @@ use crate::models::positively::Positively;
 use chrono::{DateTime, Utc, NaiveDateTime, Timelike};
 use crate::schema::positivelys::columns as positivelys_columns;
 use crate::schema::positivelys::table as positivelys_table;
-use diesel::{Queryable, Insertable, SqliteConnection, QueryDsl, RunQueryDsl, ExpressionMethods, QueryResult};
+use crate::schema::media_files::table as media_files_table;
+use crate::schema::media_files::columns as media_files_columns;
+use diesel::{Queryable, Insertable, SqliteConnection, QueryDsl, RunQueryDsl, ExpressionMethods, QueryResult, Connection, JoinOnDsl, Identifiable};
 use crate::schema::*;
+use diesel::result::Error;
+use crate::repositories::media_files_repository::MediaFileDAO;
 
-#[derive(Queryable)]
+#[derive(Queryable, Identifiable)]
+#[table_name = "positivelys"]
 pub struct PositivelyDAO {
     pub id: i32,
     pub moment: String,
@@ -21,30 +26,49 @@ pub struct PositivelyInsertableDAO {
     pub updated_at: Option<NaiveDateTime>,
 }
 
-pub fn create_positively(positively: Positively, connection: &SqliteConnection) {
-    let positively_insertable_dao = PositivelyInsertableDAO {
-        moment: positively.moment,
-        created_at: current_naive_date_time(),
-        updated_at: None,
-    };
+pub fn create_positively(positively: Positively, connection: &SqliteConnection) -> Positively {
+    let result = connection.transaction::<_, Error, _>(|| {
+        let positively_insertable_dao = PositivelyInsertableDAO {
+            moment: positively.moment,
+            created_at: current_naive_date_time(),
+            updated_at: None,
+        };
 
-    let _result = diesel::insert_into(positivelys_table)
-        .values(&positively_insertable_dao)
-        .execute(connection)
-        .expect("Error saving new post");
+        diesel::insert_into(positivelys_table)
+            .values(&positively_insertable_dao)
+            .execute(connection).unwrap();
+
+        let saved_positively: PositivelyDAO = positivelys_table
+            .order_by(positivelys_columns::id.desc())
+            .first(connection).unwrap();
+
+        Ok(Positively {
+            id: saved_positively.id,
+            moment: saved_positively.moment.to_string(),
+            media_file: None,
+            created_at: date_time_from_naive(saved_positively.created_at.clone()),
+            updated_at: None,
+        })
+    });
+
+    result.unwrap()
 }
 
 pub fn all_positivelys(connection: &SqliteConnection) -> Vec<Positively> {
-    let results: Vec<PositivelyDAO> = positivelys_table
+    let results: Vec<(PositivelyDAO, Option<MediaFileDAO>)> = positivelys_table
         .order_by(positivelys_columns::created_at.desc())
-        .load::<PositivelyDAO>(connection)
+        .left_outer_join(media_files_table.on(media_files_columns::positively_id.eq(positivelys_columns::id)))
+        .load::<(PositivelyDAO, Option<MediaFileDAO>)>(connection)
         .unwrap();
 
-
-    results.iter().fold(Vec::new(), |mut collection: Vec<Positively>, positively_doa| {
+    results.iter().fold(Vec::new(), |mut collection: Vec<Positively>, (positively_doa, media_file_doa)| {
         let positively = Positively {
             id: positively_doa.id,
             moment: positively_doa.moment.to_string(),
+            media_file: match media_file_doa {
+                None => None,
+                Some(media_file) => Some(media_file.to_media_file())
+            },
             created_at: date_time_from_naive(positively_doa.created_at),
             updated_at: date_time_from_naive_option(positively_doa.updated_at),
         };
@@ -53,6 +77,7 @@ pub fn all_positivelys(connection: &SqliteConnection) -> Vec<Positively> {
 
         collection
     })
+    // vec![]
 }
 
 pub fn positively_by_id(connection: &SqliteConnection, id: i32) -> Option<Positively> {
@@ -63,6 +88,7 @@ pub fn positively_by_id(connection: &SqliteConnection, id: i32) -> Option<Positi
             let positively = Positively {
                 id: positivelys_doa.id,
                 moment: positivelys_doa.moment,
+                media_file: None,
                 created_at: date_time_from_naive(positivelys_doa.created_at),
                 updated_at: date_time_from_naive_option(positivelys_doa.updated_at),
             };
@@ -95,17 +121,17 @@ pub fn update_positively(connection: &SqliteConnection, positively: Positively) 
     }
 }
 
-fn date_time_from_naive(time: NaiveDateTime) -> DateTime<Utc> {
+pub fn date_time_from_naive(time: NaiveDateTime) -> DateTime<Utc> {
     DateTime::from_utc(time, Utc)
 }
 
-fn current_naive_date_time() -> NaiveDateTime {
+pub fn current_naive_date_time() -> NaiveDateTime {
     let now = chrono::Utc::now();
     let time = NaiveDateTime::from_timestamp(now.timestamp(), now.nanosecond());
     time
 }
 
-fn date_time_from_naive_option(time: Option<NaiveDateTime>) -> Option<DateTime<Utc>> {
+pub fn date_time_from_naive_option(time: Option<NaiveDateTime>) -> Option<DateTime<Utc>> {
     match time {
         None => {
             None

@@ -10,8 +10,9 @@ public class AppService {
 
     func appContext() -> String {
         let database_path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] + "/database.sqlite"
+        let local_files_path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
 
-        let appContext = "{\"database_path\":\"" + database_path + "\"}"
+        let appContext = "{\"database_path\":\"" + database_path + "\", \"assets_path\": \"" + Bundle.main.bundlePath   + "\", \"local_files_path\":\"" + local_files_path + "\"}"
         return appContext
     }
 

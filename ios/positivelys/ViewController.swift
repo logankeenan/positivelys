@@ -21,7 +21,8 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
     var uri: String = ""
     private var html_markup: String!
 
-
+    var imagePicker: ImagePicker!
+    var imagePickerInputId: String!
 
     public convenience init(html_markup: String, uri: String) {
         self.init()
@@ -32,6 +33,7 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.userContentController.add(self, name: "makeAppRequest")
+        webConfiguration.userContentController.add(self, name: "invokePhotoPicker")
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
         webView.navigationDelegate = self
@@ -41,11 +43,22 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        webView.loadHTMLString(self.html_markup, baseURL: Bundle.main.bundleURL)
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        let filename = documentsDirectory.appendingPathComponent("index.html")
+
+        do {
+            //html is a string
+            try self.html_markup.write(to: filename, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            //...
+        }
+        webView.loadFileURL(filename, allowingReadAccessTo: documentsDirectory)
 
 
         let attributes = [NSAttributedString.Key.font: UIFont(name: "Nunito-Bold", size: 18)!]
         self.navigationController?.navigationBar.titleTextAttributes = attributes
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -54,12 +67,45 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
 
     public func reload(html_markup: String) {
         self.html_markup = html_markup;
-        webView.loadHTMLString(html_markup, baseURL: Bundle.main.bundleURL)
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        let filename = documentsDirectory.appendingPathComponent("index.html")
+
+        do {
+            //html is a string
+            try self.html_markup.write(to: filename, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            //...
+        }
+        webView.loadFileURL(filename, allowingReadAccessTo: documentsDirectory)
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "makeAppRequest" {
             self.delegate?.makeAppRequest(self, request_as_json: message.body as! String)
+        }
+
+        if message.name == "invokePhotoPicker" {
+            self.imagePickerInputId = message.body as! String
+            self.imagePicker.present()
+        }
+    }
+}
+
+extension ViewController: ImagePickerDelegate {
+
+    func didSelect(image: UIImage?) {
+        let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(),
+                isDirectory: true)
+        let url = temporaryDirectoryURL.appendingPathComponent("temp-image-picker.png")
+
+        if let data = image?.pngData() {
+            do {
+                try data.write(to: url)
+                self.webView.evaluateJavaScript("window.positivelys.setImagePickerPath('\(url)', '\(self.imagePickerInputId!)')");
+            } catch {
+                print("Unable to Write Image Data to Disk")
+            }
         }
     }
 }

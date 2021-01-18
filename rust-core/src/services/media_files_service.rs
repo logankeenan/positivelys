@@ -3,7 +3,7 @@ use std::fs;
 use crate::models::default_properties::current_date_time;
 use uuid::Uuid;
 use diesel::SqliteConnection;
-use crate::repositories::media_files_repository::{insert_media_file, media_file_by_positively};
+use crate::repositories::media_files_repository::{insert_media_file, media_file_by_positively, delete_media_file_by_positively_id};
 
 pub fn create_media_file(mut temp_file_path: String, media_directory_path: String, positively_id: i32, connection: &SqliteConnection) -> MediaFile {
     let file_name_without_extension = Uuid::new_v4();
@@ -42,4 +42,9 @@ pub fn remove_media_file_file(positively_id: i32, connection: &SqliteConnection,
             fs::remove_file(remove_file_location);
         }
     }
+}
+
+pub fn remove_media_file(positively_id: i32, connection: &SqliteConnection, local_files_path: String) {
+    remove_media_file_file(positively_id, &connection, local_files_path);
+    delete_media_file_by_positively_id(positively_id, &connection);
 }

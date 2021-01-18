@@ -91,3 +91,9 @@ pub fn media_file_by_positively(positively_id: i32, connection: &SqliteConnectio
         Err(_) => None
     }
 }
+
+pub fn delete_media_file_by_positively_id(positively_id: i32, connection: &SqliteConnection) {
+    diesel::delete(
+        media_files_table.filter(media_files_columns::positively_id.eq(positively_id)))
+        .execute(connection);
+}

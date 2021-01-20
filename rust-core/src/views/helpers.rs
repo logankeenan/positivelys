@@ -9,7 +9,7 @@ pub fn register_helpers(handlebars: &mut Handlebars) {
             Ok(date) => {
 
                 let local_time = date.with_timezone(&Local);
-                local_time.format("%b %u, %l:%M %p").to_string()
+                local_time.format("%b %e, %l:%M %p").to_string()
             },
             Err(_) => "".to_string(),
         }

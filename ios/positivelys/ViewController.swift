@@ -42,18 +42,7 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let documentsDirectory = paths[0]
-        let filename = documentsDirectory.appendingPathComponent("index.html")
-
-        do {
-            //html is a string
-            try self.html_markup.write(to: filename, atomically: true, encoding: String.Encoding.utf8)
-        } catch {
-            //...
-        }
-        webView.loadFileURL(filename, allowingReadAccessTo: documentsDirectory)
+        writeHTMLToFileAndLoad()
 
 
         let attributes = [NSAttributedString.Key.font: UIFont(name: "Nunito-Bold", size: 18)!]
@@ -67,17 +56,7 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
 
     public func reload(html_markup: String) {
         self.html_markup = html_markup;
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let documentsDirectory = paths[0]
-        let filename = documentsDirectory.appendingPathComponent("index.html")
-
-        do {
-            //html is a string
-            try self.html_markup.write(to: filename, atomically: true, encoding: String.Encoding.utf8)
-        } catch {
-            //...
-        }
-        webView.loadFileURL(filename, allowingReadAccessTo: documentsDirectory)
+        writeHTMLToFileAndLoad()
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -89,6 +68,20 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
             self.imagePickerInputId = message.body as! String
             self.imagePicker.present()
         }
+    }
+
+    private func writeHTMLToFileAndLoad() {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        let filename = documentsDirectory.appendingPathComponent("index.html")
+
+        do {
+            //html is a string
+            try self.html_markup.write(to: filename, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            //...
+        }
+        webView.loadFileURL(filename, allowingReadAccessTo: documentsDirectory)
     }
 }
 

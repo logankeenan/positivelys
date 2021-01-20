@@ -421,15 +421,18 @@
                     {{#each positivelys as |positively|}}
 
                         <li class="my-2 pt-1 p-3 bg-white shadow-sm font-weight-bold">
-                            <div class="mt-n2 pb-2 font-12 text-muted font-weight-lighter">
-                                {{fmt_positively_time positively.created_at}}
-
-
-                                <div class="float-right clearfix">
+                            <div class="mt-n2 pb-2 font-12 text-muted font-weight-lighter d-flex">
+                                <div>
+                                    {{fmt_positively_time positively.created_at}}
+                                </div>
+                                <div class="ml-auto">
                                     <div class="dropdown">
-                                        <button class="btn btn-link btn-sm text-muted dropdown-toggle" type="button"
+                                        <button class="btn btn-link btn-sm text-muted dropdown-toggle p-0 border-0 font-12 align-baseline" type="button"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            &bull;&bull;&bull;
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                                            </svg>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right"
                                              aria-labelledby="dropdownMenuButton">
@@ -448,11 +451,11 @@
                             </div>
                             {{#if positively.media_file }}
                                 <img
-                                    src="{{@root.local_files_path}}{{positively.media_file.file_location}}"
-                                    width="100%"
-                                    height="auto"
-                                    class="rounded-sm mb-1"
-                                    alt=""
+                                        src="{{@root.local_files_path}}{{positively.media_file.file_location}}"
+                                        width="100%"
+                                        height="auto"
+                                        class="rounded-sm mb-1"
+                                        alt=""
                                 />
                             {{/if}}
                             {{positively.moment}}

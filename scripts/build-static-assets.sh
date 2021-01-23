@@ -9,6 +9,7 @@ cp node_modules/jquery/dist/jquery.slim.js assets/static/js
 cp node_modules/popper.js/dist/umd/popper.js assets/static/js
 cp node_modules/bootstrap/dist/js/bootstrap.js assets/static/js
 cp node_modules/morphdom/dist/morphdom-umd.js assets/static/js
+cp node_modules/typed.js/lib/typed.js assets/static/js
 
 #copy over css to static assets
 mkdir assets/static/css

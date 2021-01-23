@@ -1,5 +1,6 @@
 package com.cultivatedsoftware.positivelys
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,12 +45,12 @@ class WebPageFragment : Fragment(R.layout.fragment_web_page) {
         ).applicationInfo.dataDir
         val appRequest = AppRequest(fragmentUrl.toString(), "GET")
 
-        val appService = AppService(databasePath)
+        val appService = AppService(databasePath, inflate.context.filesDir.absolutePath)
         val response = appService.makeRequest(appRequest)
         val body = response.body ?: ""
 
         webView = inflate.findViewById(R.id.fragment_web_view)
-        webView.addJavascriptInterface(WebAppInterface(inflate.context), "Android")
+        webView.addJavascriptInterface(WebAppInterface(inflate.context as AppPageActivity), "Android")
         val webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)

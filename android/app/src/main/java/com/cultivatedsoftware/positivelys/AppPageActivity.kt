@@ -1,5 +1,6 @@
 package com.cultivatedsoftware.positivelys
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +12,12 @@ import androidx.fragment.app.replace
 
 const val APP_PAGE_ACTIVITY_URL = "com.cultivatedsoftware.positivelys.APP_PAGE_ACTIVITY_URL"
 const val APP_PAGE_WAS_REDIRECT = "com.cultivatedsoftware.positivelys.APP_PAGE_WAS_REDIRECT"
+const val IMAGE_REQUEST_CODE = 1
 
 class AppPageActivity : AppCompatActivity() {
+    var imagePickerPath: String = ""
+    var imagePickerInputId: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_page)
@@ -77,6 +82,24 @@ class AppPageActivity : AppCompatActivity() {
                     addToBackStack(url)
                 }
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == IMAGE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val get =
+                    supportFragmentManager.fragments.get(supportFragmentManager.fragments.size - 1) as WebPageFragment
+                get.webView.evaluateJavascript(
+                    "window.positivelys.setImagePickerPath('$imagePickerPath', '$imagePickerInputId')",
+                    null
+                )
+            }
+
+            imagePickerInputId = ""
+            imagePickerPath = ""
         }
     }
 

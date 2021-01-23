@@ -5,17 +5,16 @@ import com.cultivatedsoftware.positivelys.models.AppRequest
 import com.cultivatedsoftware.positivelys.models.AppResponse
 import com.google.gson.Gson
 
-class AppService(var databasePath: String) {
+class AppService(var dataDirectory: String, var filesDirectory: String) {
 
     var gson: Gson = Gson();
     fun makeRequest(appRequest: AppRequest): AppResponse {
         val appRequestAsJson = gson.toJson(appRequest)
-        val appContext = AppContext(database_path = "$databasePath/database.sqlite")
+        val appContext = AppContext(database_path = "$dataDirectory/database.sqlite", assets_path = "file:///android_asset", local_files_path = "$filesDirectory")
         val appContextAsJson = gson.toJson(appContext)
 
         val appResponseAsJson = makeapprequest(appRequestAsJson, appContextAsJson)
         val response = gson.fromJson<AppResponse>(appResponseAsJson, AppResponse::class.java)
-
 
         return response
     }

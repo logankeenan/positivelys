@@ -398,7 +398,9 @@
                     <div class="col-10 text-black-50">
                         <a href="https://positivelys.com/positivelys/new"
                            class="text-decoration-none text-reset px-3 py-2 rounded border d-inline-block w-100">
-                            What's positive about today?
+                            <div class="d-inline-block" id="whatsPositive">
+                                What's positive about today?
+                            </div>
                         </a>
                     </div>
                     <div class="col-2 pr-0">
@@ -427,7 +429,8 @@
                                 </div>
                                 <div class="ml-auto">
                                     <div class="dropdown">
-                                        <button class="btn btn-link btn-sm text-muted dropdown-toggle p-0 border-0 font-12 align-baseline" type="button"
+                                        <button class="btn btn-link btn-sm text-muted dropdown-toggle p-0 border-0 font-12 align-baseline"
+                                                type="button"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                  fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
@@ -463,11 +466,10 @@
                     {{/each}}
                 </ul>
             {{else}}
-                <div class="bg-white">
-                    <p class="bg-white my-2 pt-0 p-3">
-                        <span class="font-weight-bold">Positivelys</span> creates a habit out of positive thinking.
-                        Create Positivelys every day and as often as you can.
-                    </p>
+                <div id="noPositivelys" class="alert alert-primary" role="alert">
+                    <span class="font-weight-bold">Positivelys</span> is your personal feed of positive moments & thoughts. Add to
+                    your <span class="font-weight-bold">Positivelys</span> often to make a habit out of positive
+                    thinking.
                 </div>
             {{/if}}
 

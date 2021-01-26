@@ -24,10 +24,11 @@ class WebAppInterface(private val mContext: AppPageActivity) {
         mContext.imagePickerInputId = imagePickerResultId
 
         val chooserIntent = Intent(Intent.ACTION_CHOOSER)
-        val contentSelectionIntent = Intent(Intent.ACTION_GET_CONTENT)
-        contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE)
-        contentSelectionIntent.type = "image/*" // file types to be allowed for upload
-        chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent)
+        val pickPhoto = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
+        chooserIntent.putExtra(Intent.EXTRA_INTENT, pickPhoto)
         chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser")
 
         // TODO this should save the image to app cache or temp dir that other apps don't have access to

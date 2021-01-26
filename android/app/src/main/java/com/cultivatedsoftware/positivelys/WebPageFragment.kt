@@ -1,6 +1,5 @@
 package com.cultivatedsoftware.positivelys
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +23,13 @@ class WebPageFragment : Fragment(R.layout.fragment_web_page) {
             fragmentUrl = it.getString(WEB_PAGE_FRAGMENT_URL)
         }
    }
+
+    override fun onResume() {
+        super.onResume()
+
+
+        reloadPageToUpdateCountWhenNextDay()
+    }
 
     fun setTitle() {
         val titleElement = this.activity?.findViewById<TextView>(R.id.toolbar_title)
@@ -67,6 +73,11 @@ class WebPageFragment : Fragment(R.layout.fragment_web_page) {
             "base64",
             "https://positivelys.com"
         )
+
         return inflate
+    }
+
+    private fun reloadPageToUpdateCountWhenNextDay() {
+        webView.reload()
     }
 }

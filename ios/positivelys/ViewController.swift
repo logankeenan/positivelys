@@ -38,6 +38,26 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
         webView.uiDelegate = self
         webView.navigationDelegate = self
         view = webView
+
+        NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(appBecomeActive),
+                name: UIApplication.willEnterForegroundNotification,
+                object: nil
+        )
+    }
+
+    @objc func appBecomeActive() {
+        writeHTMLToFileAndLoad()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 
     override func viewDidLoad() {

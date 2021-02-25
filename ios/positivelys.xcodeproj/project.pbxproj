@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		028C114D25A6375E009C0620 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 028C114C25A6375E009C0620 /* assets */; };
+		028C114D25A6375E009C0620 /* dist in Resources */ = {isa = PBXBuildFile; fileRef = 028C114C25A6375E009C0620 /* dist */; };
 		02A3919A25A89FCD003E4E3A /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02A3919825A89FCD003E4E3A /* Nunito-Bold.ttf */; };
 		02FA5272254CBAEA00E378A8 /* librust_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FA5271254CBAE100E378A8 /* librust_ios.a */; };
 		625EE03A57FBE6135AB3C707 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EEC6C70B1C1FB27AF85A2 /* AppDelegate.swift */; };
@@ -43,7 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		028C114C25A6375E009C0620 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../../assets; sourceTree = "<group>"; };
+		028C114C25A6375E009C0620 /* dist */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dist; path = "../../rust-core/dist"; sourceTree = "<group>"; };
 		02A3919825A89FCD003E4E3A /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; path = "Nunito-Bold.ttf"; sourceTree = "<group>"; };
 		02D6407B25B64BF30012B8AA /* positivelys.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = positivelys.entitlements; sourceTree = "<group>"; };
 		02FA5271254CBAE100E378A8 /* librust_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librust_ios.a; path = "rust-ios/libs/librust_ios.a"; sourceTree = "<group>"; };
@@ -144,7 +144,7 @@
 			children = (
 				02D6407B25B64BF30012B8AA /* positivelys.entitlements */,
 				02A3919625A89F35003E4E3A /* fonts */,
-				028C114C25A6375E009C0620 /* assets */,
+				028C114C25A6375E009C0620 /* dist */,
 				625EE43184EE88102E90357B /* Info.plist */,
 				625EEFC8BA57E4A79EA46B2E /* Assets.xcassets */,
 				625EEC6C70B1C1FB27AF85A2 /* AppDelegate.swift */,
@@ -274,7 +274,7 @@
 			files = (
 				02A3919A25A89FCD003E4E3A /* Nunito-Bold.ttf in Resources */,
 				625EE3170999E020B3F17DA6 /* Assets.xcassets in Resources */,
-				028C114D25A6375E009C0620 /* assets in Resources */,
+				028C114D25A6375E009C0620 /* dist in Resources */,
 				625EEC2C13DDEFAFBE3EE496 /* LaunchScreen.storyboard in Resources */,
 				625EE27258ACDD379DBB53A0 /* Main.storyboard in Resources */,
 			);

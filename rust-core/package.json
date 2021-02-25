@@ -1,0 +1,28 @@
+{
+  "name": "rust-core",
+  "version": "1.0.0",
+  "description": "`cargo watch -s \"cargo build\"`",
+  "main": "index.js",
+  "scripts": {
+    "build:scss": "sass src/assets/scss:dist/css",
+    "build:js": "esbuild src/assets/js/application.js --outfile=dist/js/application.js --bundle",
+    "build": "npm run build:scss && npm run build:js && npm run copy",
+    "copy:fonts": "cp -rf src/assets/fonts dist/fonts",
+    "copy:android": "cp -rf dist/ ../android/app/src/main/assets/dist/",
+    "copy": "npm run copy:fonts && npm run copy:android",
+    "dev": "chokidar 'src/assets/**/**' -c 'npm run build'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "chokidar-cli": "^2.1.0",
+    "esbuild": "^0.8.50",
+    "jquery": "^3.5.1",
+    "morphdom": "^2.6.1",
+    "popper.js": "^1.16.1",
+    "sass": "^1.32.8",
+    "typed.js": "^2.0.11"
+  }
+}

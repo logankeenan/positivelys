@@ -1,5 +1,8 @@
 #!/bin/sh
 
+cd rust-core
+npm run build
+cd ../
 
 if [ -n "$1" ] && [ $1 = '--release' ]
 then

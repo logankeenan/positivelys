@@ -1,3 +1,10 @@
+import 'morphdom/dist/morphdom-umd.js';
+import "jquery";
+import "popper.js";
+import "bootstrap";
+import Typed from "typed.js";
+
+
 document.addEventListener('touchstart', function (event) {
     let element = event.target;
     if (element.dataset.imagePicker) {

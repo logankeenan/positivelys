@@ -13,6 +13,7 @@ use crate::repositories::media_files_repository::media_file_by_positively;
 use crate::models::media_file::MediaFile;
 use serde_aux::field_attributes::deserialize_number_from_string;
 
+
 #[derive(Deserialize, Serialize)]
 pub struct IndexViewModel {
     positivelys: Vec<Positively>,
@@ -92,7 +93,7 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
             let mut positively = Positively::new();
             positively.moment = positively_form.moment;
 
-            let positively_saved = create_positively(positively, &connection);
+                let positively_saved = create_positively(positively, &connection);
 
             if !positively_form.media_file_location.is_empty() {
                 create_media_file(

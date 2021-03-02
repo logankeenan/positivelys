@@ -9,8 +9,7 @@
     "build": "npm run build:scss && npm run build:js && npm run copy",
     "copy:fonts": "cp -rf src/assets/fonts dist/fonts",
     "copy:android": "cp -rf dist/ ../android/app/src/main/assets/dist/",
-    "copy:views": "cp -rf src/views dist/ && rm dist/views/*.rs",
-    "copy": "npm run copy:views && npm run copy:fonts && npm run copy:android",
+    "copy": "npm run copy:fonts && npm run copy:android",
     "dev": "chokidar 'src/assets/**/**' -c 'npm run build'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

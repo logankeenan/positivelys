@@ -24,13 +24,6 @@ class WebPageFragment : Fragment(R.layout.fragment_web_page) {
         }
    }
 
-    override fun onResume() {
-        super.onResume()
-
-
-        reloadPageToUpdateCountWhenNextDay()
-    }
-
     fun setTitle() {
         val titleElement = this.activity?.findViewById<TextView>(R.id.toolbar_title)
         titleElement?.setText(webView.title.replace("Positivelys |", ""))
@@ -75,9 +68,5 @@ class WebPageFragment : Fragment(R.layout.fragment_web_page) {
         )
 
         return inflate
-    }
-
-    private fun reloadPageToUpdateCountWhenNextDay() {
-        webView.reload()
     }
 }

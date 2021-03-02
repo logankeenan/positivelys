@@ -3,6 +3,7 @@ import "jquery";
 import "popper.js";
 import "bootstrap";
 import Typed from "typed.js";
+import fromEntries from 'fromentries';
 
 
 document.addEventListener('touchstart', function (event) {
@@ -85,7 +86,7 @@ document.addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
+    const data = fromEntries(formData.entries());
 
     await makeAppRequest(event.target.action, event.target.method.toUpperCase(), JSON.stringify(data))
 });

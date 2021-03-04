@@ -7,7 +7,6 @@ if [ -n "$1" ] && [ $1 = '--release' ]
 then
   cargo build --target aarch64-linux-android --release
   cargo build --target armv7-linux-androideabi --release
-  cargo build --target i686-linux-android --release
 else
   cargo build --target aarch64-linux-android
   cargo build --target armv7-linux-androideabi

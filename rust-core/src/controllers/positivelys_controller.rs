@@ -41,7 +41,6 @@ pub async fn index(app_request: AppRequest) -> IndexViewModel {
         "roll-in-left",
         "swirl-in-bottom-bck",
         "slide-in-elliptic-right-fwd",
-        "rotate-in-diag-1",
         "jello-horizontal"
     ];
 

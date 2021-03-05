@@ -30,6 +30,17 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
         self.uri = uri
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(appBecomeActive),
+                name: UIApplication.willEnterForegroundNotification,
+                object: nil
+        )
+    }
+
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.userContentController.add(self, name: "makeAppRequest")
@@ -38,13 +49,6 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
         webView.uiDelegate = self
         webView.navigationDelegate = self
         view = webView
-
-        NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(appBecomeActive),
-                name: UIApplication.willEnterForegroundNotification,
-                object: nil
-        )
     }
 
     @objc func appBecomeActive() {

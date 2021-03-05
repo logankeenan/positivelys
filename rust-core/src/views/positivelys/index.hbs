@@ -57,56 +57,58 @@
 
 
         <section class="container px-0 mt-2">
-            {{#if positivelys}}
+            {{#if positivelys_grouped_by_day}}
                 <ul class="list-unstyled">
-                    {{#each positivelys as |positively|}}
-
-                        <li class="my-2 pt-1 p-3 bg-white shadow-sm font-weight-bold">
-                            <div class="mt-n2 pb-2 font-12 text-muted font-weight-lighter d-flex">
-                                <div>
-                                    {{fmt_positively_time positively.created_at}}
-                                </div>
-                                <div class="ml-auto">
-                                    <div class="dropdown">
-                                        <button class="btn btn-link btn-sm text-muted dropdown-toggle p-0 border-0 font-12 align-baseline"
-                                                type="button"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                                            </svg>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right"
-                                             aria-labelledby="dropdownMenuButton">
+                    {{#each positivelys_grouped_by_day as |positivelys_by_day|}}
+                        {{#each positivelys_by_day as | positively |}}
+                            <li class="my-2 pt-1 p-3 bg-white shadow-sm font-weight-bold {{#if @last}}mb-4{{/if}}">
+                                <div class="mt-n2 pb-2 font-12 text-muted font-weight-lighter d-flex">
+                                    <div>
+                                        {{fmt_positively_time positively.created_at}}
+                                    </div>
+                                    <div class="ml-auto">
+                                        <div class="dropdown">
+                                            <button class="btn btn-link btn-sm text-muted dropdown-toggle p-0 border-0 font-12 align-baseline"
+                                                    type="button"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                                                </svg>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right"
+                                                 aria-labelledby="dropdownMenuButton">
                                             <span class="dropdown-item">
                                                 <a class="btn btn-link"
                                                    href="https://positivelys.com/positivelys/{{id}}/edit">Edit</a>
                                             </span>
-                                            <form action="https://positivelys.com/positivelys/{{id}}/delete"
-                                                  method="POST" class="dropdown-item">
-                                                <input type="submit" class="btn btn-link" value="Delete"/>
-                                            </form>
+                                                <form action="https://positivelys.com/positivelys/{{id}}/delete"
+                                                      method="POST" class="dropdown-item">
+                                                    <input type="submit" class="btn btn-link" value="Delete"/>
+                                                </form>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            {{#if positively.media_file }}
-                                <img
-                                        src="{{@root.local_files_path}}{{positively.media_file.file_location}}"
-                                        width="100%"
-                                        height="auto"
-                                        class="rounded-sm mb-1"
-                                        alt=""
-                                />
-                            {{/if}}
-                            {{positively.moment}}
-                        </li>
+                                {{#if positively.media_file }}
+                                    <img
+                                            src="{{@root.local_files_path}}{{positively.media_file.file_location}}"
+                                            width="100%"
+                                            height="auto"
+                                            class="rounded-sm mb-1"
+                                            alt=""
+                                    />
+                                {{/if}}
+                                {{positively.moment}}
+                            </li>
+                        {{/each}}
                     {{/each}}
                 </ul>
             {{else}}
                 <div id="noPositivelys" class="alert alert-primary" role="alert">
-                    <span class="font-weight-bold">Positivelys</span> is your personal feed of positive moments & thoughts. Add to
+                    <span class="font-weight-bold">Positivelys</span> is your personal feed of positive moments &
+                    thoughts. Add to
                     your <span class="font-weight-bold">Positivelys</span> often to make a habit out of positive
                     thinking.
                 </div>

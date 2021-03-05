@@ -4,7 +4,7 @@ use routines::factories::app_response_factory;
 use serde_json::Error;
 use routines::models::app_response::{AppResponse};
 use crate::models::positively::Positively;
-use chrono::{Local, Utc};
+use chrono::{Local, Utc, Datelike};
 use rand::seq::SliceRandom;
 use crate::repositories::positivelys_repository::{all_positivelys, create_positively, positively_by_id, update_positively, remove_positively};
 use crate::repositories::database::establish_connection;
@@ -16,7 +16,7 @@ use serde_aux::field_attributes::deserialize_number_from_string;
 
 #[derive(Deserialize, Serialize)]
 pub struct IndexViewModel {
-    positivelys: Vec<Positively>,
+    positivelys_grouped_by_day: Vec<Vec<Positively>>,
     todays_total: usize,
     animation_class: String,
     assets_path: String,
@@ -46,12 +46,37 @@ pub async fn index(app_request: AppRequest) -> IndexViewModel {
 
     let option = animation_classes.choose(&mut rand::thread_rng()).unwrap().to_string();
     IndexViewModel {
-        positivelys,
+        positivelys_grouped_by_day: positivelys_grouped_by_index(positivelys),
         todays_total,
         animation_class: option,
         assets_path,
         local_files_path,
     }
+}
+
+fn positivelys_grouped_by_index(positivelys: Vec<Positively>) -> Vec<Vec<Positively>> {
+    positivelys
+        .into_iter()
+        .enumerate()
+        .fold(Vec::new(), |mut grouped_by_day: Vec<Vec<Positively>>, (positively_index, positively)| {
+            if positively_index == 0 {
+                let mut positivelys_for_day: Vec<Positively> = Vec::new();
+                positivelys_for_day.push(positively);
+                grouped_by_day.push(positivelys_for_day)
+            } else {
+                let mut last_positivelys_by_day = grouped_by_day.last_mut().unwrap();
+                let last_positively = last_positivelys_by_day.last().unwrap();
+
+                if last_positively.created_at.day().eq(&positively.created_at.day()) {
+                    last_positivelys_by_day.push(positively)
+                } else {
+                    let mut positivelys_for_day: Vec<Positively> = Vec::new();
+                    positivelys_for_day.push(positively);
+                    grouped_by_day.push(positivelys_for_day)
+                }
+            }
+            grouped_by_day
+        })
 }
 
 #[derive(Deserialize, Serialize)]
@@ -92,7 +117,7 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
             let mut positively = Positively::new();
             positively.moment = positively_form.moment;
 
-                let positively_saved = create_positively(positively, &connection);
+            let positively_saved = create_positively(positively, &connection);
 
             if !positively_form.media_file_location.is_empty() {
                 create_media_file(

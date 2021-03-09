@@ -67,7 +67,8 @@ fn positivelys_grouped_by_index(positivelys: Vec<Positively>) -> Vec<Vec<Positiv
                 let mut last_positivelys_by_day = grouped_by_day.last_mut().unwrap();
                 let last_positively = last_positivelys_by_day.last().unwrap();
 
-                if last_positively.created_at.day().eq(&positively.created_at.day()) {
+                if last_positively.created_at.with_timezone(&Local).day().eq(
+                    &positively.created_at.with_timezone(&Local).day()) {
                     last_positivelys_by_day.push(positively)
                 } else {
                     let mut positivelys_for_day: Vec<Positively> = Vec::new();

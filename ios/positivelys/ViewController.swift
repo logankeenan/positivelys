@@ -52,6 +52,10 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
     }
 
     @objc func appBecomeActive() {
+        let request = AppRequest(uri: "\(uri)", method: "GET")
+        let response = AppService().make_request(appRequest: request)
+
+        self.html_markup = (response.body)!
         writeHTMLToFileAndLoad()
     }
 

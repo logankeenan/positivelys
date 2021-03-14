@@ -375,7 +375,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = positivelys/positivelys.entitlements;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PSXUQ4V6VZ;
 				HEADER_SEARCH_PATHS = "/Users/logan/Developer/positivelys/ios/rust-ios/include";
 				INFOPLIST_FILE = positivelys/Info.plist;
@@ -384,7 +384,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/rust-ios/libs",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cultivatedsoftware.positivelys;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/logan/Developer/positivelys/ios/rust-ios/include/rust-ios.h";
@@ -399,7 +399,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = positivelys/positivelys.entitlements;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PSXUQ4V6VZ;
 				HEADER_SEARCH_PATHS = "/Users/logan/Developer/positivelys/ios/rust-ios/include";
 				INFOPLIST_FILE = positivelys/Info.plist;
@@ -408,7 +408,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/rust-ios/libs",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cultivatedsoftware.positivelys;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/logan/Developer/positivelys/ios/rust-ios/include/rust-ios.h";

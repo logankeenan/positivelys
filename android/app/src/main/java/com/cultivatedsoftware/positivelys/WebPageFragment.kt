@@ -27,7 +27,6 @@ class WebPageFragment : Fragment(R.layout.fragment_web_page) {
     override fun onResume() {
         super.onResume()
 
-
         reloadPageToUpdateCountWhenNextDay()
     }
 
@@ -78,6 +77,8 @@ class WebPageFragment : Fragment(R.layout.fragment_web_page) {
     }
 
     private fun reloadPageToUpdateCountWhenNextDay() {
-        webView.reload()
+         if (fragmentUrl == "https://positivelys.com/positivelys") {
+             webView.reload()
+         }
     }
 }

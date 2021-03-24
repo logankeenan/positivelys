@@ -18,6 +18,7 @@
 		625EE4DACF4C0F9F3E737D9A /* AppResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE84344F4BD0642C72156 /* AppResponse.swift */; };
 		625EE5FE79B452F07742414A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE024A861FA2F8474D0C4 /* SceneDelegate.swift */; };
 		625EE76A6AA3F1E40D04FD25 /* positivelysTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE20AA43F88E22D3F3960 /* positivelysTests.swift */; };
+		625EE7EF26055EE961B94879 /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EEEB22363BD0A958A60ED /* AppContext.swift */; };
 		625EEA6BBC33BF901224344E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EEC7AD54DC35A35B22BCC /* ImagePicker.swift */; };
 		625EEACADF15D9E98598E7D1 /* positivelysUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE2B10F919A36B7F3D796 /* positivelysUITests.swift */; };
 		625EEC2C13DDEFAFBE3EE496 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 625EE44A3D3BC585682472CE /* LaunchScreen.storyboard */; };
@@ -65,6 +66,7 @@
 		625EEB34EF4A6A8D104B8ACC /* positivelysUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = positivelysUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		625EEC6C70B1C1FB27AF85A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		625EEC7AD54DC35A35B22BCC /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		625EEEB22363BD0A958A60ED /* AppContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
 		625EEFC8BA57E4A79EA46B2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -157,6 +159,7 @@
 				625EE80101D96F2B6F0CD808 /* AppRequest.swift */,
 				625EE22C7A9865B3E1583FC7 /* AppService.swift */,
 				625EEC7AD54DC35A35B22BCC /* ImagePicker.swift */,
+				625EEEB22363BD0A958A60ED /* AppContext.swift */,
 			);
 			path = positivelys;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				625EEEA38A7800959764DB9F /* AppRequest.swift in Sources */,
 				625EE19BFB9FFC7753C2484D /* AppService.swift in Sources */,
 				625EEA6BBC33BF901224344E /* ImagePicker.swift in Sources */,
+				625EE7EF26055EE961B94879 /* AppContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

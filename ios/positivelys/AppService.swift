@@ -11,9 +11,11 @@ public class AppService {
     func appContext() -> String {
         let database_path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] + "/database.sqlite"
         let local_files_path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
+        let assets_path = Bundle.main.bundlePath
+        let views_path = "\(Bundle.main.bundlePath)/dist/views/"
+        let appContext = AppContext(database_path: database_path, local_files_path: local_files_path, assets_path: assets_path, views_path: views_path)
 
-        let appContext = "{\"database_path\":\"" + database_path + "\", \"assets_path\": \"" + Bundle.main.bundlePath   + "\", \"local_files_path\":\"" + local_files_path + "\"}"
-        return appContext
+        return appContext.asJson()
     }
 
     public func make_request(appRequest: AppRequest) -> AppResponse {

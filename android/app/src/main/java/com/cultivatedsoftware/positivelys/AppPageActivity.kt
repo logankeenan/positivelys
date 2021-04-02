@@ -17,6 +17,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.cultivatedsoftware.positivelys.services.FileService
 
 const val APP_PAGE_ACTIVITY_URL = "com.cultivatedsoftware.positivelys.APP_PAGE_ACTIVITY_URL"
 const val APP_PAGE_WAS_REDIRECT = "com.cultivatedsoftware.positivelys.APP_PAGE_WAS_REDIRECT"
@@ -26,9 +27,12 @@ private const val STORAGE_PERMISSION_CODE = 101
 class AppPageActivity : AppCompatActivity() {
     var imagePickerPath: String = ""
     var imagePickerInputId: String = ""
+    private val preferencesKey = "viewsInstalledFor"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installViewTemplates()
+
         setContentView(R.layout.activity_app_page)
 
         val toolbar =
@@ -53,6 +57,26 @@ class AppPageActivity : AppCompatActivity() {
             supportFragmentManager.addOnBackStackChangedListener {
                 (supportFragmentManager.fragments.first() as WebPageFragment).setTitle()
             }
+        }
+    }
+
+    private fun installViewTemplates() {
+        val sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val version = BuildConfig.VERSION_CODE.toString() + "_" + BuildConfig.VERSION_NAME
+        if (!sharedPreferences.contains(preferencesKey) || !sharedPreferences.getString(
+                preferencesKey,
+                ""
+            ).equals(version)
+        ) {
+            val fileService = FileService(assets)
+            val viewTemplates =
+                fileService.listFilesRecursively("dist/views").filter { it.endsWith(".hbs") }
+
+            fileService.writeFilesToDataDirectory(viewTemplates, this)
+
+            val edit = sharedPreferences.edit()
+            edit.putString(preferencesKey, version)
+            edit.commit()
         }
     }
 

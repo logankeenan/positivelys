@@ -10,7 +10,12 @@ class AppService(var dataDirectory: String, var filesDirectory: String) {
     var gson: Gson = Gson();
     fun makeRequest(appRequest: AppRequest): AppResponse {
         val appRequestAsJson = gson.toJson(appRequest)
-        val appContext = AppContext(database_path = "$dataDirectory/database.sqlite", assets_path = "file:///android_asset", local_files_path = "$filesDirectory")
+        val appContext = AppContext(
+            database_path = "$dataDirectory/database.sqlite",
+            assets_path = "file:///android_asset",
+            local_files_path = "$filesDirectory",
+            views_path = "$dataDirectory/dist/views/"
+        )
         val appContextAsJson = gson.toJson(appContext)
 
         val appResponseAsJson = makeapprequest(appRequestAsJson, appContextAsJson)

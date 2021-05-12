@@ -5,12 +5,25 @@ cargo clean
 
 if [ -n "$1" ] && [ $1 = '--release' ]
 then
+  TARGET_AR=/Users/logan/.NDK/arm64/bin/aarch64-linux-android-ar
+  TARGET_CC=/Users/logan/.NDK/arm64/bin/aarch64-linux-android-clang
   cargo build --target aarch64-linux-android --release
+
+  TARGET_AR=/Users/logan/.NDK/arm/bin/arm-linux-androideabi-ar
+  TARGET_CC=/Users/logan/.NDK/arm/bin/arm-linux-androideabi-clang
   cargo build --target armv7-linux-androideabi --release
 else
+  TARGET_AR=/Users/logan/.NDK/arm64/bin/aarch64-linux-android-ar
+  TARGET_CC=/Users/logan/.NDK/arm64/bin/aarch64-linux-android-clang
   cargo build --target aarch64-linux-android
+
+  TARGET_AR=/Users/logan/.NDK/arm/bin/arm-linux-androideabi-ar
+  TARGET_CC=/Users/logan/.NDK/arm/bin/arm-linux-androideabi-clang
   cargo build --target armv7-linux-androideabi
-  cargo build --target i686-linux-android
+
+  TARGET_AR=/Users/logan/.NDK/x86/bin/i686-linux-android-ar
+  TARGET_CC=/Users/logan/.NDK/x86/bin/i686-linux-android-clang
+  cargo build --target i686-linux-android 
 fi
 
 cd ../

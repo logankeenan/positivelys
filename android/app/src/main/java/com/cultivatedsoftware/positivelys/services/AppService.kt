@@ -14,7 +14,9 @@ class AppService(var dataDirectory: String, var filesDirectory: String) {
             database_path = "$dataDirectory/database.sqlite",
             assets_path = "file:///android_asset",
             local_files_path = "$filesDirectory",
-            views_path = "$dataDirectory/dist/views/"
+            views_path = "$dataDirectory/dist/views/",
+            environment = "development",
+            os = "android"
         )
         val appContextAsJson = gson.toJson(appContext)
 

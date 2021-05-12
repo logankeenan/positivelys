@@ -1,5 +1,6 @@
 use routines_macros::route;
 use routines::models::app_request::AppRequest;
+use routines::factories::html_factory;
 use routines::factories::app_response_factory;
 use serde_json::Error;
 use routines::models::app_response::{AppResponse};
@@ -25,9 +26,8 @@ pub struct IndexViewModel {
 
 #[route(path = "/positivelys")]
 pub async fn index(app_request: AppRequest) -> IndexViewModel {
-    let assets_path = app_request.app_context.clone().unwrap().assets_path;
     let local_files_path = app_request.app_context.clone().unwrap().local_files_path;
-    let connection = establish_connection(app_request.app_context.unwrap().database_path);
+    let connection = establish_connection(app_request.clone().app_context.unwrap().database_path);
     let positivelys = all_positivelys(&connection);
     let todays_date = Utc::now().with_timezone(&Local).date();
     let todays_total = positivelys.iter().filter(|positively| {
@@ -49,7 +49,7 @@ pub async fn index(app_request: AppRequest) -> IndexViewModel {
         positivelys_grouped_by_day: positivelys_grouped_by_index(positivelys),
         todays_total,
         animation_class: option,
-        assets_path,
+        assets_path: html_factory::assets_path(app_request),
         local_files_path,
     }
 }
@@ -96,15 +96,13 @@ pub struct NewViewModel {
 
 #[route(path = "/positivelys/new")]
 pub async fn new(app_request: AppRequest) -> NewViewModel {
-    let assets_path = app_request.app_context.clone().unwrap().assets_path;
-
     NewViewModel {
         form: PositivelyForm {
             id: 0,
             moment: "".to_string(),
             media_file_location: "".to_string(),
         },
-        assets_path,
+        assets_path: html_factory::assets_path(app_request),
     }
 }
 
@@ -164,7 +162,6 @@ pub struct EditViewModel {
 
 #[route(path = "/positivelys/{id}/edit", method = "GET")]
 pub async fn edit(app_request: AppRequest) -> EditViewModel {
-    let assets_path = app_request.app_context.clone().unwrap().assets_path;
     let connection = establish_connection(app_request.app_context.clone().unwrap().database_path);
     let positively_id = app_request.get_path_param("id").unwrap().parse::<i32>().unwrap();
     let local_files_path = app_request.app_context.clone().unwrap().local_files_path;
@@ -182,7 +179,7 @@ pub async fn edit(app_request: AppRequest) -> EditViewModel {
                 Some(media_file) => media_file.file_location
             },
         },
-        assets_path,
+        assets_path: html_factory::assets_path(app_request),
         local_files_path,
     }
 }

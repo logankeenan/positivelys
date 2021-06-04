@@ -23,6 +23,7 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
 
     var imagePicker: ImagePicker!
     var imagePickerInputId: String!
+    var refreshControl = UIRefreshControl()
 
     public convenience init(html_markup: String, uri: String) {
         self.init()
@@ -48,10 +49,15 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
         webView.navigationDelegate = self
+
         view = webView
     }
 
     @objc func appBecomeActive() {
+        reloadWebview();
+    }
+
+    func reloadWebview() {
         let request = AppRequest(uri: "\(uri)", method: "GET")
         let response = AppService().make_request(appRequest: request)
 
@@ -72,10 +78,18 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
         super.viewDidLoad()
         writeHTMLToFileAndLoad()
 
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        self.webView.scrollView.addSubview(refreshControl) // not required when using UITableViewController
 
         let attributes = [NSAttributedString.Key.font: UIFont(name: "Nunito-Bold", size: 18)!]
         self.navigationController?.navigationBar.titleTextAttributes = attributes
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+    }
+
+    @objc func refresh(_ sender: AnyObject) {
+        refreshControl.beginRefreshing()
+        reloadWebview()
+        refreshControl.endRefreshing()
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

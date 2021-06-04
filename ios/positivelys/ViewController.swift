@@ -80,9 +80,6 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
 
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         self.webView.scrollView.addSubview(refreshControl) // not required when using UITableViewController
-
-        let attributes = [NSAttributedString.Key.font: UIFont(name: "Nunito-Bold", size: 18)!]
-        self.navigationController?.navigationBar.titleTextAttributes = attributes
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
     }
 

@@ -25,9 +25,8 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
     var imagePickerInputId: String!
     var refreshControl = UIRefreshControl()
 
-    public convenience init(html_markup: String, uri: String) {
+    public convenience init(uri: String) {
         self.init()
-        self.html_markup = html_markup
         self.uri = uri
     }
 
@@ -51,13 +50,14 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
         webView.navigationDelegate = self
 
         view = webView
+        loadFromLocalServer();
     }
 
     @objc func appBecomeActive() {
-        reloadWebview();
+        loadFromLocalServer();
     }
 
-    func reloadWebview() {
+    func loadFromLocalServer() {
         let request = AppRequest(uri: "\(uri)", method: "GET")
         let response = AppService().make_request(appRequest: request)
 
@@ -88,7 +88,7 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
 
     @objc func refresh(_ sender: AnyObject) {
         refreshControl.beginRefreshing()
-        reloadWebview()
+        loadFromLocalServer()
         refreshControl.endRefreshing()
     }
 
@@ -96,9 +96,8 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
         self.title = webView.title
     }
 
-    public func reload(html_markup: String) {
-        self.html_markup = html_markup;
-        writeHTMLToFileAndLoad()
+    public func reload() {
+        loadFromLocalServer()
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {

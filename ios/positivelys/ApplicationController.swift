@@ -19,14 +19,14 @@ class ApplicationController: UINavigationController {
 
         if wasRedirected && getPreviousController().uri == new_uri {
             popViewController(animated: true)
-            getCurrentController().reload(html_markup: (response.body)!)
+            getCurrentController().reload()
         } else if wasRedirected {
-            let controller = ViewController(html_markup: (response.body)!, uri: new_uri)
+            let controller = ViewController(uri: new_uri)
             controller.delegate = self
             popViewController(animated: false)
             pushViewController(controller, animated: true)
         } else {
-            let controller = ViewController(html_markup: (response.body)!, uri: new_uri)
+            let controller = ViewController(uri: new_uri)
             controller.delegate = self
             pushViewController(controller, animated: true)
         }

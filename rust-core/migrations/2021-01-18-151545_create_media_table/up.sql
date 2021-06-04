@@ -2,8 +2,8 @@
 
 CREATE TABLE IF NOT EXISTS media_files
 (
-    id         INTEGER PRIMARY KEY,
-    positively_id integer,
+    id         INTEGER PRIMARY KEY not null,
+    positively_id integer not null,
     file_name     TEXT NOT NULL,
     file_location TEXT not null,
     file_extension TEXT not null,

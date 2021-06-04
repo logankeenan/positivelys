@@ -12,7 +12,7 @@ class ApplicationController: UITabBarController {
         positivelys_controller.tabBarItem.title = "Positivelys"
         positivelys_controller.tabBarItem.image = UIImage(systemName: "heart.fill")
 
-        let reminders_controller = NavigationController(uri: "\(AppService.hostName)/positivelys/new")
+        let reminders_controller = NavigationController(uri: "\(AppService.hostName)/reminders")
         reminders_controller.tabBarItem.title = "Reminders"
         reminders_controller.tabBarItem.image = UIImage(systemName: "alarm.fill")
 

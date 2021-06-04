@@ -2,10 +2,11 @@ use chrono::NaiveDateTime;
 use crate::schema::media_files::columns as media_files_columns;
 use crate::schema::media_files::table as media_files_table;
 use crate::models::media_file::MediaFile;
-use diesel::{SqliteConnection, RunQueryDsl, Connection, QueryDsl, ExpressionMethods, Associations, Identifiable, QueryResult};
-use crate::repositories::positivelys_repository::{current_naive_date_time, date_time_from_naive, date_time_from_naive_option};
+use diesel::{SqliteConnection, RunQueryDsl, Connection, QueryDsl, ExpressionMethods, Associations, QueryResult};
 use crate::schema::*;
 use diesel::result::Error;
+use crate::factories::date_time::{date_time_from_naive, date_time_from_naive_option};
+use crate::factories::naive_date_time::current_naive_date_time;
 
 #[derive(Debug, Queryable, Associations)]
 #[belongs_to(crate::repositories::positivelys_repository::PositivelyDAO, foreign_key = "positively_id")]

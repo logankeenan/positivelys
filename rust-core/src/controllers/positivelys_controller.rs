@@ -11,7 +11,6 @@ use crate::repositories::positivelys_repository::{all_positivelys, create_positi
 use crate::repositories::database::establish_connection;
 use crate::services::media_files_service::{create_media_file, remove_media_file_file, remove_media_file};
 use crate::repositories::media_files_repository::media_file_by_positively;
-use crate::models::media_file::MediaFile;
 use serde_aux::field_attributes::deserialize_number_from_string;
 
 
@@ -64,7 +63,7 @@ fn positivelys_grouped_by_index(positivelys: Vec<Positively>) -> Vec<Vec<Positiv
                 positivelys_for_day.push(positively);
                 grouped_by_day.push(positivelys_for_day)
             } else {
-                let mut last_positivelys_by_day = grouped_by_day.last_mut().unwrap();
+                let last_positivelys_by_day = grouped_by_day.last_mut().unwrap();
                 let last_positively = last_positivelys_by_day.last().unwrap();
 
                 if last_positively.created_at.with_timezone(&Local).day().eq(
@@ -188,7 +187,7 @@ pub async fn edit(app_request: AppRequest) -> EditViewModel {
 pub async fn update(app_request: AppRequest) -> AppResponse {
     let local_files_path = app_request.app_context.clone().unwrap().local_files_path;
     let connection = establish_connection(app_request.app_context.clone().unwrap().database_path);
-    let mut positively_form: PositivelyForm = serde_json::from_str(app_request.clone().body.unwrap().as_str()).unwrap();
+    let positively_form: PositivelyForm = serde_json::from_str(app_request.clone().body.unwrap().as_str()).unwrap();
     let mut positively = positively_by_id(&connection, positively_form.id).unwrap();
     let positively_id = positively.id;
     positively.moment = positively_form.moment;

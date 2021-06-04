@@ -1,5 +1,5 @@
 use crate::models::positively::Positively;
-use chrono::{DateTime, Utc, NaiveDateTime, Timelike};
+use chrono::{NaiveDateTime};
 use crate::schema::positivelys::columns as positivelys_columns;
 use crate::schema::positivelys::table as positivelys_table;
 use crate::schema::media_files::table as media_files_table;
@@ -8,6 +8,8 @@ use diesel::{Queryable, Insertable, SqliteConnection, QueryDsl, RunQueryDsl, Exp
 use crate::schema::*;
 use diesel::result::Error;
 use crate::repositories::media_files_repository::MediaFileDAO;
+use crate::factories::date_time::{date_time_from_naive, date_time_from_naive_option};
+use crate::factories::naive_date_time::current_naive_date_time;
 
 #[derive(Queryable, Identifiable)]
 #[table_name = "positivelys"]
@@ -117,27 +119,6 @@ pub fn update_positively(connection: &SqliteConnection, positively: Positively) 
         }
         Err(error) => {
             println!("update positively error: {}", error)
-        }
-    }
-}
-
-pub fn date_time_from_naive(time: NaiveDateTime) -> DateTime<Utc> {
-    DateTime::from_utc(time, Utc)
-}
-
-pub fn current_naive_date_time() -> NaiveDateTime {
-    let now = chrono::Utc::now();
-    let time = NaiveDateTime::from_timestamp(now.timestamp(), now.nanosecond());
-    time
-}
-
-pub fn date_time_from_naive_option(time: Option<NaiveDateTime>) -> Option<DateTime<Utc>> {
-    match time {
-        None => {
-            None
-        }
-        Some(naive_date_time) => {
-            Some(date_time_from_naive(naive_date_time))
         }
     }
 }

@@ -1,0 +1,96 @@
+{{#> application_layout}}
+    {{#*inline "page_title"}}Reminders{{/inline}}
+    {{#*inline "page_content"}}
+
+        <style>
+            input[type="time"] {
+                -webkit-appearance: none;
+            }
+            input::-webkit-date-and-time-value {
+                margin-right: 0;
+            }
+        </style>
+        <div class="bg-white border-bottom-gray">
+            <div class="container py-3">
+                <form action="https://positivelys.com/reminders" method="POST">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="time">Time</label>
+                                <input value="{{form.time}}" type="time" id="time" name="time" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="day">Day</label>
+                                <select value="{{form.day}}" name="day" class="form-control" id="day">
+                                    <option value="0">Sunday</option>
+                                    <option value="1">Monday</option>
+                                    <option value="2">Tuesday</option>
+                                    <option value="3">Wednesday</option>
+                                    <option value="4">Thursday</option>
+                                    <option value="5">Friday</option>
+                                    <option value="6">Saturday</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+
+        <section class="container px-0 mt-2">
+            <ul class="list-unstyled">
+                {{#each reminders as |reminder|}}
+
+                    <li class="my-2 pt-1 p-3 bg-white shadow-sm font-weight-bold {{#if @last}}mb-4{{/if}}">
+                        <div class="mt-n2 pb-2 font-12 text-muted font-weight-lighter d-flex">
+                            <div>
+                                Hour {{reminder.hour}}
+                                <br>
+                                Minute {{reminder.minute}}
+                                <br>
+                                Day {{reminder.day}}
+                                <br>
+                            </div>
+                            <div class="ml-auto">
+                                <div class="dropdown">
+                                    <button class="btn btn-link btn-sm text-muted dropdown-toggle p-0 border-0 font-12 align-baseline"
+                                            type="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right"
+                                         aria-labelledby="dropdownMenuButton">
+                                            <span class="dropdown-item">
+                                                <a class="btn btn-link"
+                                                   href="https://positivelys.com/positivelys/{{id}}/edit">Edit</a>
+                                            </span>
+                                        <form action="https://positivelys.com/positivelys/{{id}}/delete"
+                                              method="POST" class="dropdown-item">
+                                            <input type="submit" class="btn btn-link" value="Delete"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
+
+
+        </section>
+
+    {{/inline}}
+{{/application_layout}}
+

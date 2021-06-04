@@ -1,13 +1,4 @@
 table! {
-    positivelys (id) {
-        id -> Integer,
-        moment -> Text,
-        created_at -> Timestamp,
-        updated_at -> Nullable<Timestamp>,
-    }
-}
-
-table! {
     media_files (id) {
         id -> Integer,
         positively_id -> Integer,
@@ -19,9 +10,30 @@ table! {
     }
 }
 
+table! {
+    positivelys (id) {
+        id -> Integer,
+        moment -> Text,
+        created_at -> Timestamp,
+        updated_at -> Nullable<Timestamp>,
+    }
+}
+
+table! {
+    reminders (id) {
+        id -> Integer,
+        minute -> Integer,
+        hour -> Integer,
+        day -> Integer,
+        created_at -> Timestamp,
+        updated_at -> Nullable<Timestamp>,
+    }
+}
+
 joinable!(media_files -> positivelys (positively_id));
 
 allow_tables_to_appear_in_same_query!(
-    positivelys,
     media_files,
+    positivelys,
+    reminders,
 );

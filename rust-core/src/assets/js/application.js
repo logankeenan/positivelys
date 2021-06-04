@@ -87,7 +87,6 @@ document.addEventListener('submit', async function (event) {
 
     const formData = new FormData(event.target);
     const data = fromEntries(formData.entries());
-
     await makeAppRequest(event.target.action, event.target.method.toUpperCase(), JSON.stringify(data))
 });
 

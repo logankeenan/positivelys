@@ -27,6 +27,7 @@ mod services;
 mod models;
 mod views;
 mod schema;
+mod factories;
 
 use routines::App;
 use routines::models::app_request::{AppRequest};
@@ -35,6 +36,7 @@ use futures::executor::block_on;
 use crate::repositories::database::{establish_connection, run_migrations};
 use std::collections::HashMap;
 use routines::models::app_context::AppContext;
+use controllers::reminders_controller;
 
 async fn handle_request(app_request_json: String, app_context_json: String) -> String {
     let mut app = App::new();
@@ -44,6 +46,8 @@ async fn handle_request(app_request_json: String, app_context_json: String) -> S
     app.add_route(controllers::positivelys_controller::edit);
     app.add_route(controllers::positivelys_controller::update);
     app.add_route(controllers::positivelys_controller::delete);
+    app.add_route(reminders_controller::index);
+    app.add_route(reminders_controller::create);
     app.start();
 
     let app_request_result: Result<AppRequest, Error> = serde_json::from_str(&app_request_json);

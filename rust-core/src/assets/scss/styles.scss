@@ -22,9 +22,39 @@ $primary: #09CBCB;
 $link-color: #212529;
 @import '../../../node_modules/bootstrap/scss/bootstrap';
 @import './animations';
+@import "reminders";
 
 // hack because ios will hold the hover colors on button until the user presses somewhere else.
 .btn:hover {
   background-color: inherit;
   color: inherit;
+}
+
+.font-12 {
+  font-size: 12px;
+}
+
+.font-22 {
+  font-size: 22px;
+}
+
+
+.dropdown-toggle:after {
+  content: none
+}
+
+.dropdown-toggle.btn-link:focus {
+  text-decoration: none;
+}
+
+.dropdown-toggle.btn-link:hover {
+  text-decoration: none;
+}
+
+.dropdown-toggle.btn:focus {
+  box-shadow: none;
+}
+
+.h-0 {
+  height: 0;
 }

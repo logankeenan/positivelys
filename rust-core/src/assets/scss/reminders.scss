@@ -1,0 +1,9 @@
+.reminders-index {
+  input[type="time"] {
+    -webkit-appearance: none;
+  }
+
+  input::-webkit-date-and-time-value {
+    margin-right: 0;
+  }
+}

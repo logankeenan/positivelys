@@ -1,4 +1,4 @@
-use crate::models::reminder::Reminder;
+use crate::models::reminder::{Reminder, ReminderDay};
 use chrono::{NaiveDateTime};
 use crate::schema::reminders::columns as reminders_columns;
 use crate::schema::reminders::table as reminders_table;
@@ -25,6 +25,7 @@ impl ReminderDAO {
             minute: self.minute,
             hour: self.hour,
             day: self.day,
+            day_e: ReminderDay::Everyday,
             created_at: date_time_from_naive(self.created_at),
             updated_at: date_time_from_naive_option(self.updated_at),
         }

@@ -70,3 +70,13 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
         }
     }
 }
+
+#[route(path = "/reminders/{id}/delete", method = "POST")]
+pub async fn delete(app_request: AppRequest) -> AppResponse {
+    let connection = establish_connection(app_request.app_context.clone().unwrap().database_path);
+    let reminder_id = app_request.get_path_param("id").unwrap().parse::<i32>().unwrap();
+    reminders_repository::remove(&connection, reminder_id);
+
+    app_response_factory::redirect("https://positivelys.com/reminders".to_string())
+}
+

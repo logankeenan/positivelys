@@ -5,8 +5,8 @@ use crate::models::default_properties::current_date_time;
 #[derive(strum_macros::Display)]
 pub enum ReminderDay {
     Everyday = -3,
-    Weekends = -2,
-    Weekdays = -1,
+    Weekdays = -2,
+    Weekends = -1,
     Sunday = 0,
     Monday = 1,
     Tuesday = 2,
@@ -20,8 +20,8 @@ impl ReminderDay {
     pub fn from(value: i32) -> ReminderDay {
         match value {
             -3 => { ReminderDay::Everyday }
-            -2 => { ReminderDay::Weekends }
-            -1 => { ReminderDay::Weekdays }
+            -2 => { ReminderDay::Weekdays }
+            -1 => { ReminderDay::Weekends }
             0 => { ReminderDay::Sunday }
             1 => { ReminderDay::Monday }
             2 => { ReminderDay::Tuesday }

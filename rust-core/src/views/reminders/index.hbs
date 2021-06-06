@@ -46,8 +46,6 @@
                                 </button>
                             </div>
                         </div>
-
-
                     </form>
                 </div>
             </div>
@@ -56,14 +54,13 @@
                 <ul class="list-unstyled">
                     {{#each reminders as |reminder|}}
 
-                        <li class="my-2 pt-1 p-2 bg-white shadow-sm font-weight-bold {{#if @last}}mb-4{{/if}}">
+                        <li class="my-2 pt-1 px-3 p-2 bg-white shadow-sm font-weight-bold {{#if @last}}mb-4{{/if}}">
                             <div class="row d-flex align-items-center">
                                 <div class="col-8">
-                                    {{reminder.day_e}}
-                                    Tuesday 4:00 PM
+                                    {{reminder.day}} {{fmt_reminder_time reminder.hour reminder.minute}}
                                 </div>
                                 <div class="col-4">
-                                    <form action="https://positivelys.com/positivelys/{{id}}/delete"
+                                    <form action="https://positivelys.com/reminders/{{id}}/delete"
                                           method="POST" class="dropdown-item">
                                         <input type="submit" class="btn btn-outline-dark btn-sm" value="Remove"/>
                                     </form>

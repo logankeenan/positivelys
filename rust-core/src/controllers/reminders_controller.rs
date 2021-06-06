@@ -4,7 +4,7 @@ use routines_macros::route;
 use serde_json::Error;
 use routines::factories::html_factory;
 use routines::factories::app_response_factory;
-use crate::models::reminder::Reminder;
+use crate::models::reminder::{Reminder, ReminderDay};
 use crate::repositories::reminders_repository;
 use crate::repositories::database::establish_connection;
 use serde_aux::field_attributes::deserialize_number_from_string;
@@ -55,7 +55,7 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
             let mut reminder = Reminder::new();
             reminder.hour = time.hour() as i32;
             reminder.minute = time.minute() as i32;
-            reminder.day = reminder_form.day;
+            reminder.day = ReminderDay::from(reminder_form.day);
 
             let _saved_reminder = reminders_repository::create(reminder, &connection);
             app_response_factory::redirect("https://positivelys.com/reminders".to_string())

@@ -16,14 +16,34 @@ pub enum ReminderDay {
     Saturday = 6,
 }
 
+impl ReminderDay {
+    pub fn from(value: i32) -> ReminderDay {
+        match value {
+            -3 => { ReminderDay::Everyday }
+            -2 => { ReminderDay::Weekends }
+            -1 => { ReminderDay::Weekdays }
+            0 => { ReminderDay::Sunday }
+            1 => { ReminderDay::Monday }
+            2 => { ReminderDay::Tuesday }
+            3 => { ReminderDay::Wednesday }
+            4 => { ReminderDay::Thursday }
+            5 => { ReminderDay::Friday }
+            6 => { ReminderDay::Saturday }
+            _ => {
+                // This should never happen
+                ReminderDay::Saturday
+            }
+        }
+    }
+}
+
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Reminder {
     #[serde(default = "crate::models::default_properties::i32_zero")]
     pub id: i32,
     pub minute: i32,
     pub hour: i32,
-    pub day: i32,
-    pub day_e: ReminderDay,
+    pub day: ReminderDay,
 
     #[serde(skip_deserializing)]
     #[serde(default = "crate::models::default_properties::current_date_time")]
@@ -38,8 +58,7 @@ impl Reminder {
             id: 0,
             minute: 0,
             hour: 0,
-            day: 0,
-            day_e: ReminderDay::Everyday,
+            day: ReminderDay::Saturday,
             created_at: current_date_time(),
             updated_at: None,
         }

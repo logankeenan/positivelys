@@ -24,8 +24,7 @@ impl ReminderDAO {
             id: self.id,
             minute: self.minute,
             hour: self.hour,
-            day: self.day,
-            day_e: ReminderDay::Everyday,
+            day: ReminderDay::from(self.day),
             created_at: date_time_from_naive(self.created_at),
             updated_at: date_time_from_naive_option(self.updated_at),
         }
@@ -47,7 +46,7 @@ impl ReminderInsertableDAO {
         ReminderInsertableDAO {
             minute: reminder.minute,
             hour: reminder.hour,
-            day: reminder.day,
+            day: reminder.day as i32,
             created_at: current_naive_date_time(),
             updated_at: None
         }

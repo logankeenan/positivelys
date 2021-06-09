@@ -12,6 +12,6 @@ public class AppRequest: Codable {
 
     init(uri: String, method: String) {
         self.uri = uri
-        self.method = method
+        self.method = method.uppercased()
     }
 }

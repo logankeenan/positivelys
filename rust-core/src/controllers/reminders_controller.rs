@@ -19,6 +19,12 @@ pub struct IndexViewModel {
     local_files_path: String,
 }
 
+//TODO fetch the reminders and just return it as json
+// #[route(path = "/reminders", accept = "application/json")]
+// pub async fn index_as_json() -> IndexJSON {
+//
+// }
+
 #[route(path = "/reminders")]
 pub async fn index(app_request: AppRequest) -> IndexViewModel {
     let app_context = app_request.clone().app_context.unwrap();
@@ -65,7 +71,6 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
                 status_code: 200,
                 body: Some("failure".to_string()),
                 headers: None,
-                factory_meta: None,
             }
         }
     }

@@ -133,7 +133,6 @@ pub async fn create(app_request: AppRequest) -> AppResponse {
                 status_code: 200,
                 body: Some("failure".to_string()),
                 headers: None,
-                factory_meta: None,
             }
         }
     }

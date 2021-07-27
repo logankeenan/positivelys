@@ -12,18 +12,29 @@ use crate::factories::naive_date_time::from_24_hour;
 use chrono::Timelike;
 
 #[derive(Serialize)]
+pub struct IndexJSONViewModel {
+    reminders: Vec<Reminder>
+}
+
+#[route(path = "/reminders", content_type = "application/json")]
+pub async fn index_as_json(app_request: AppRequest) -> IndexJSONViewModel {
+    let app_context = app_request.clone().app_context.unwrap();
+    let connection = establish_connection(app_context.database_path);
+    let reminders = reminders_repository::all(&connection);
+
+    IndexJSONViewModel {
+        reminders
+    }
+}
+
+
+#[derive(Serialize)]
 pub struct IndexViewModel {
     form: ReminderForm,
     reminders: Vec<Reminder>,
     assets_path: String,
     local_files_path: String,
 }
-
-//TODO fetch the reminders and just return it as json
-// #[route(path = "/reminders", accept = "application/json")]
-// pub async fn index_as_json() -> IndexJSON {
-//
-// }
 
 #[route(path = "/reminders")]
 pub async fn index(app_request: AppRequest) -> IndexViewModel {

@@ -7,11 +7,12 @@ import Foundation
 public class AppRequest: Codable {
     var uri: String = ""
     var body: String?
-    var headers: Dictionary<String, String>?
+    var headers: Dictionary<String, String>
     var method: String
 
     init(uri: String, method: String) {
         self.uri = uri
         self.method = method.uppercased()
+        self.headers = [:]
     }
 }

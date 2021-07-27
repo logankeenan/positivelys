@@ -25,3 +25,4 @@ rand = "0.7.3"
 uuid = { version = "0.7", features = ["v4"] }
 serde-aux = "2.1.1"
 strum_macros = "0.21.1"
+mime = "0.3.16"

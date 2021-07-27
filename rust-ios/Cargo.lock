@@ -1123,6 +1123,7 @@ dependencies = [
  "handlebars",
  "http",
  "http-serde",
+ "mime",
  "reqwest",
  "routines_macros",
  "serde",
@@ -1138,6 +1139,7 @@ version = "0.1.0"
 dependencies = [
  "darling",
  "include_dir",
+ "mime",
  "quote",
  "serde",
  "serde_derive",
@@ -1156,6 +1158,7 @@ dependencies = [
  "handlebars",
  "include_dir",
  "libsqlite3-sys",
+ "mime",
  "rand 0.7.3",
  "routines",
  "routines_macros",

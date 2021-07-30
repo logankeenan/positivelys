@@ -17,6 +17,7 @@ class NavigationController: UINavigationController {
         var response = AppService().make_request(appRequest: request)
         var wasRedirected = false
 
+        ResponseHandlers(appRequest: request, appResponse: response)
         if response.status_code == 302 {
             wasRedirected = true
             let location: String? = response.headers?["Location"]
@@ -61,8 +62,12 @@ class NavigationController: UINavigationController {
 
 extension NavigationController: ViewControllerDelegate {
     func makeAppRequest(_ viewController: ViewController, request_as_json: String) {
-        let request: AppRequest? = try? JSONDecoder().decode(AppRequest.self, from: request_as_json.data(using: .utf8)!)
-
-        handle_request_response(request: request!)
+        do {
+            let request: AppRequest? = try JSONDecoder().decode(AppRequest.self, from: request_as_json.data(using: .utf8)!)
+            handle_request_response(request: request!)
+        } catch {
+            // TODO log some error
+            print("Unexpected error: \(error).")
+        }
     }
 }

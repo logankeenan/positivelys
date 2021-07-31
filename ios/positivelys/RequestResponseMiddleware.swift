@@ -9,7 +9,25 @@ class RequestResponseMiddleware {
     public func handle(appRequest: AppRequest, appResponse: AppResponse) -> AppResponse {
         handleReminderCreated(appRequest: appRequest, appResponse: appResponse)
 
-        return appResponse
+        let response = handleNotificationsNotEnabled(appRequest: appRequest, appResponse: appResponse)
+
+        return response
+    }
+
+    private func handleNotificationsNotEnabled(appRequest: AppRequest, appResponse: AppResponse) -> AppResponse {
+        let requestingRemindersPage = appRequest.uri == "\(AppService.hostName)/reminders" && appRequest.method.lowercased() == "get"
+        var response: AppResponse = appResponse;
+
+        if requestingRemindersPage {
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                if let error = error {
+                    // TODO log some error
+                }
+            }
+        }
+
+        return response
     }
 
     private func handleReminderCreated(appRequest: AppRequest, appResponse: AppResponse) {

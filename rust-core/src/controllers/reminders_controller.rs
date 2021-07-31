@@ -13,7 +13,7 @@ use chrono::Timelike;
 
 #[derive(Serialize)]
 pub struct IndexJSONViewModel {
-    reminders: Vec<Reminder>
+    reminders: Vec<Reminder>,
 }
 
 #[route(path = "/reminders", content_type = "application/json")]
@@ -24,6 +24,22 @@ pub async fn index_as_json(app_request: AppRequest) -> IndexJSONViewModel {
 
     IndexJSONViewModel {
         reminders
+    }
+}
+
+
+#[derive(Serialize)]
+pub struct RemindersNotificationsDisabled {
+    os: String,
+}
+
+#[route(path = "/reminders/notifications-disabled")]
+pub async fn reminders_notitifications_disabled(app_request: AppRequest) -> RemindersNotificationsDisabled {
+    let app_context = app_request.app_context.clone().unwrap();
+    let os = app_context.clone().os.to_string();
+
+    RemindersNotificationsDisabled {
+        os
     }
 }
 

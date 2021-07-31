@@ -76,7 +76,8 @@ class ReminderService {
 
         notificationCenter.add(request) { (error) in
             if error != nil {
-                //TODO some sort of error logging
+                // TODO log some error
+                print("Unexpected error: \(error).")
             }
         }
     }

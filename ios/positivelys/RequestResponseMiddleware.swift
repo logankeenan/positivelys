@@ -3,12 +3,16 @@
 //
 
 import Foundation
+import UIKit
 
-class ResponseHandlers {
+class RequestResponseMiddleware {
+    public func handle(appRequest: AppRequest, appResponse: AppResponse) -> AppResponse {
+        handleReminderCreated(appRequest: appRequest, appResponse: appResponse)
 
-    public init(appRequest: AppRequest, appResponse: AppResponse) {
+        return appResponse
+    }
 
-        // TODO needs to handle when a reminder is removed.
+    private func handleReminderCreated(appRequest: AppRequest, appResponse: AppResponse) {
         let reminderCreated = appRequest.uri == "\(AppService.hostName)/reminders" && appRequest.method.lowercased() == "post" && appResponse.status_code == 302
         if reminderCreated {
             let allRemindersRequest = AppRequest(uri: "\(AppService.hostName)/reminders", method: "GET")
@@ -25,9 +29,6 @@ class ResponseHandlers {
                 // TODO log some error
                 print("Unexpected error: \(error).")
             }
-
-
         }
-
     }
 }

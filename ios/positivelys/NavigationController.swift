@@ -17,7 +17,8 @@ class NavigationController: UINavigationController {
         var response = AppService().make_request(appRequest: request)
         var wasRedirected = false
 
-        ResponseHandlers(appRequest: request, appResponse: response)
+        RequestResponseMiddleware().handle(appRequest: request, appResponse: response)
+
         if response.status_code == 302 {
             wasRedirected = true
             let location: String? = response.headers?["Location"]

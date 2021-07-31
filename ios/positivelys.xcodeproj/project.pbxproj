@@ -25,7 +25,7 @@
 		625EEACADF15D9E98598E7D1 /* positivelysUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE2B10F919A36B7F3D796 /* positivelysUITests.swift */; };
 		625EEC2C13DDEFAFBE3EE496 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 625EE44A3D3BC585682472CE /* LaunchScreen.storyboard */; };
 		625EEE6A63442E1090514F3C /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE813401DC03635B6A6AB /* ApplicationController.swift */; };
-		625EEE8EDB06632B0D339854 /* ResponseHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE0C53A9C8631CBE716CB /* ResponseHandlers.swift */; };
+		625EEE8EDB06632B0D339854 /* RequestResponseMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE0C53A9C8631CBE716CB /* RequestResponseMiddleware.swift */; };
 		625EEEA38A7800959764DB9F /* AppRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EE80101D96F2B6F0CD808 /* AppRequest.swift */; };
 		625EEF2B547EC9BDAC003F9E /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EEC98944C3C48D87D8C1E /* NavigationController.swift */; };
 /* End PBXBuildFile section */
@@ -53,7 +53,7 @@
 		02D6407B25B64BF30012B8AA /* positivelys.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = positivelys.entitlements; sourceTree = "<group>"; };
 		02FA5271254CBAE100E378A8 /* librust_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librust_ios.a; path = "rust-ios/libs/librust_ios.a"; sourceTree = "<group>"; };
 		625EE024A861FA2F8474D0C4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		625EE0C53A9C8631CBE716CB /* ResponseHandlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseHandlers.swift; sourceTree = "<group>"; };
+		625EE0C53A9C8631CBE716CB /* RequestResponseMiddleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestResponseMiddleware.swift; sourceTree = "<group>"; };
 		625EE0CBFD6B92E7B69A595D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		625EE19445F1677FE487D1B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		625EE20AA43F88E22D3F3960 /* positivelysTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = positivelysTests.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 				625EEC7AD54DC35A35B22BCC /* ImagePicker.swift */,
 				625EEEB22363BD0A958A60ED /* AppContext.swift */,
 				625EEC98944C3C48D87D8C1E /* NavigationController.swift */,
-				625EE0C53A9C8631CBE716CB /* ResponseHandlers.swift */,
+				625EE0C53A9C8631CBE716CB /* RequestResponseMiddleware.swift */,
 				625EE3A5835DB9F9096BAF04 /* Reminders.swift */,
 				625EEC0B2B24BD1C69D49CB4 /* ReminderService.swift */,
 			);
@@ -327,7 +327,7 @@
 				625EEA6BBC33BF901224344E /* ImagePicker.swift in Sources */,
 				625EE7EF26055EE961B94879 /* AppContext.swift in Sources */,
 				625EEF2B547EC9BDAC003F9E /* NavigationController.swift in Sources */,
-				625EEE8EDB06632B0D339854 /* ResponseHandlers.swift in Sources */,
+				625EEE8EDB06632B0D339854 /* RequestResponseMiddleware.swift in Sources */,
 				625EE68966FD872FB8384957 /* Reminders.swift in Sources */,
 				625EE85DCA1D30E7A6A8DFBF /* ReminderService.swift in Sources */,
 			);

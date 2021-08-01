@@ -36,7 +36,7 @@ class ReminderService {
                 createNotification(day: 6, hour: hour, minute: minute, id: id)
             case "Weekends":
                 createNotification(day: 1, hour: hour, minute: minute, id: id)
-                createNotification(day: 6, hour: hour, minute: minute, id: id)
+                createNotification(day: 7, hour: hour, minute: minute, id: id)
             case "Sunday":
                 createNotification(day: 1, hour: hour, minute: minute, id: id)
             case "Monday":

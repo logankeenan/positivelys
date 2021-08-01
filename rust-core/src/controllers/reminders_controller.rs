@@ -27,23 +27,6 @@ pub async fn index_as_json(app_request: AppRequest) -> IndexJSONViewModel {
     }
 }
 
-
-#[derive(Serialize)]
-pub struct RemindersNotificationsDisabled {
-    os: String,
-}
-
-#[route(path = "/reminders/notifications-disabled")]
-pub async fn reminders_notitifications_disabled(app_request: AppRequest) -> RemindersNotificationsDisabled {
-    let app_context = app_request.app_context.clone().unwrap();
-    let os = app_context.clone().os.to_string();
-
-    RemindersNotificationsDisabled {
-        os
-    }
-}
-
-
 #[derive(Serialize)]
 pub struct IndexViewModel {
     form: ReminderForm,
@@ -61,7 +44,7 @@ pub async fn index(app_request: AppRequest) -> IndexViewModel {
 
     IndexViewModel {
         form: ReminderForm {
-            time: "12:00".to_string(),
+            time: "20:00".to_string(),
             day: 1,
         },
         reminders,

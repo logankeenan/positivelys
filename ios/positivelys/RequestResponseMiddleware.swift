@@ -6,28 +6,24 @@ import Foundation
 import UIKit
 
 class RequestResponseMiddleware {
-    public func handle(appRequest: AppRequest, appResponse: AppResponse) -> AppResponse {
+    public func handle(appRequest: AppRequest, appResponse: AppResponse) {
         handleReminderCreated(appRequest: appRequest, appResponse: appResponse)
 
-        let response = handleNotificationsNotEnabled(appRequest: appRequest, appResponse: appResponse)
-
-        return response
+        handleNotificationsPrompt(appRequest: appRequest, appResponse: appResponse)
     }
 
-    private func handleNotificationsNotEnabled(appRequest: AppRequest, appResponse: AppResponse) -> AppResponse {
+    private func handleNotificationsPrompt(appRequest: AppRequest, appResponse: AppResponse) {
         let requestingRemindersPage = appRequest.uri == "\(AppService.hostName)/reminders" && appRequest.method.lowercased() == "get"
-        var response: AppResponse = appResponse;
 
         if requestingRemindersPage {
             let center = UNUserNotificationCenter.current()
             center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
                 if let error = error {
                     // TODO log some error
+                    print("Unexpected error: \(error).")
                 }
             }
         }
-
-        return response
     }
 
     private func handleReminderCreated(appRequest: AppRequest, appResponse: AppResponse) {
@@ -35,7 +31,6 @@ class RequestResponseMiddleware {
         if reminderCreated {
             let allRemindersRequest = AppRequest(uri: "\(AppService.hostName)/reminders", method: "GET")
             allRemindersRequest.headers!["Accept"] = "application/json"
-
             let allRemindersResponse = AppService().make_request(appRequest: allRemindersRequest)
 
             do {

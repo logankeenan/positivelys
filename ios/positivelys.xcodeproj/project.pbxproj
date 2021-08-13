@@ -396,7 +396,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_CODE_COVERAGE = YES;
 				CODE_SIGN_ENTITLEMENTS = positivelys/positivelys.entitlements;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = PSXUQ4V6VZ;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "/Users/logan/Developer/positivelys/ios/rust-ios/include";
@@ -423,7 +423,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_CODE_COVERAGE = YES;
 				CODE_SIGN_ENTITLEMENTS = positivelys/positivelys.entitlements;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = PSXUQ4V6VZ;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "/Users/logan/Developer/positivelys/ios/rust-ios/include";

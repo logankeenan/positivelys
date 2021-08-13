@@ -90,7 +90,14 @@ class ViewController: UIViewController, WKUIDelegate, WKScriptMessageHandler, WK
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        self.title = webView.title
+        // the webView.title will randomly be nil, so this solution is needed.
+        // https://stackoverflow.com/questions/48544682/swift-wkwebview-get-title-returns-nothing-if-title-contains-2-or-more-arabic-wor
+        let javascript = "document.title\n"
+        webView.evaluateJavaScript(javascript) { (result, error) -> Void in
+            if error == nil {
+                self.title = String(describing: result!)
+            }
+        }
     }
 
     public func reload() {

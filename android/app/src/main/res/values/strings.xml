@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Positivelys</string>
+    <string name="positivelys">Positivelys</string>
+    <string name="reminders">Reminders</string>
 </resources>

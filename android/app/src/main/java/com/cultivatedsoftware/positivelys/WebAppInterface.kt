@@ -79,21 +79,21 @@ class WebAppInterface(private val mContext: AppPageActivity) {
         val databasePath =
             mContext.packageManager.getPackageInfo(mContext.packageName, 0).applicationInfo.dataDir
         val appService = AppService(databasePath, mContext.filesDir.absolutePath)
-
         val appRequest = gson.fromJson<AppRequest>(appRequestAsJson, AppRequest::class.java)
+        var appResponse = appService.makeRequest(appRequest)
 
-        var response = appService.makeRequest(appRequest)
+        RequestResponseMiddleware(appService, mContext).handle(appRequest, appResponse)
 
         var wasRedirect = false
-        if (response.status_code == 302) {
-            val location = response.headers?.get("Location")
+        if (appResponse.status_code == 302) {
+            val location = appResponse.headers?.get("Location")
             val redirectAppRequest = AppRequest(location.toString(), "GET")
-            response = appService.makeRequest(redirectAppRequest)
+            appResponse = appService.makeRequest(redirectAppRequest)
 
             wasRedirect = true
         }
 
-        val contentLocation = response.headers?.get("Content-Location")
+        val contentLocation = appResponse.headers?.get("Content-Location")
         val intent = Intent(mContext, AppPageActivity::class.java).apply {
             putExtra(APP_PAGE_ACTIVITY_URL, contentLocation)
         }

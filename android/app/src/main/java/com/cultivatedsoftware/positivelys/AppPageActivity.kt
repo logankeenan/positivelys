@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.transition.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -18,6 +19,7 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.cultivatedsoftware.positivelys.services.FileService
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 const val APP_PAGE_ACTIVITY_URL = "com.cultivatedsoftware.positivelys.APP_PAGE_ACTIVITY_URL"
 const val APP_PAGE_WAS_REDIRECT = "com.cultivatedsoftware.positivelys.APP_PAGE_WAS_REDIRECT"
@@ -34,6 +36,8 @@ class AppPageActivity : AppCompatActivity() {
         installViewTemplates()
 
         setContentView(R.layout.activity_app_page)
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
         val toolbar =
             findViewById<Toolbar>(R.id.toolbar)

@@ -18,6 +18,7 @@ public class RemindersService {
         NotificationService notificationService = new NotificationService(context);
         notificationService.removeAllNotifications();
 
+        // TODO - verify the correct number of notifications is occurring...
         for (Reminder reminder : remindersResponse.reminders) {
             switch (reminder.day) {
                 case "Everyday":
@@ -27,7 +28,7 @@ public class RemindersService {
                     notificationService.createNotification(Calendar.WEDNESDAY, reminder.hour, reminder.minute, reminder.id);
                     notificationService.createNotification(Calendar.THURSDAY, reminder.hour, reminder.minute, reminder.id);
                     notificationService.createNotification(Calendar.FRIDAY, reminder.hour, reminder.minute, reminder.id);
-                    notificationService.createNotification(Calendar.SUNDAY, reminder.hour, reminder.minute, reminder.id);
+                    notificationService.createNotification(Calendar.SATURDAY, reminder.hour, reminder.minute, reminder.id);
                 case "Weekdays":
                     notificationService.createNotification(Calendar.MONDAY, reminder.hour, reminder.minute, reminder.id);
                     notificationService.createNotification(Calendar.TUESDAY, reminder.hour, reminder.minute, reminder.id);

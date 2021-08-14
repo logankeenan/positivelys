@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -63,6 +64,10 @@ public class NotificationService {
 
             alarmManager.cancel(pendingIntent);
         }
+
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt(NUMBER_OF_NOTIFICATIONS_KEY, 0);
+        edit.commit();
     }
 
     private PendingIntent getPendingIntent(Intent notificationIntent) {
@@ -164,8 +169,10 @@ public class NotificationService {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, NOTIFICATION_REQUEST_CODE, intent, 0);
 
+        int primaryColorAsInt = 0x0009cbcb;
         return new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setColor(primaryColorAsInt)
                 .setLargeIcon(drawableToBitmap(context.getResources().getDrawable(R.mipmap.ic_launcher, null)))
                 .setContentTitle(title)
                 .setContentText(message)

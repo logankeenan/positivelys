@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.transition.Visibility
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -37,7 +38,10 @@ class AppPageActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_app_page)
 
+        // TODO - the color needs to be correct on the bottom navigation
+        // TODO - the active nav highlight needs to be correct
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener(onBottomNavigationClick())
 
         val toolbar =
             findViewById<Toolbar>(R.id.toolbar)
@@ -60,6 +64,30 @@ class AppPageActivity : AppCompatActivity() {
 
             supportFragmentManager.addOnBackStackChangedListener {
                 (supportFragmentManager.fragments.first() as WebPageFragment).setTitle()
+            }
+        }
+    }
+
+    private fun onBottomNavigationClick(): (MenuItem) -> Boolean {
+        return { item ->
+            when (item.itemId) {
+                R.id.positivelys_menu_item -> {
+                    // TODO make this navigate to positivelys.  Should this go to root??
+
+                    true
+                }
+                R.id.reminders_menu_item -> {
+                    val url = "https://positivelys.com/reminders"
+                    val bundle = bundleOf(WEB_PAGE_FRAGMENT_URL to url)
+                    supportFragmentManager.commit {
+                        setReorderingAllowed(true)
+                        add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
+                        addToBackStack(url)
+                    }
+
+                    true
+                }
+                else -> false
             }
         }
     }

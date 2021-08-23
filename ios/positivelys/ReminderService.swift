@@ -85,6 +85,7 @@ class ReminderService {
     // TODO this probably needs to be adjusted at some point to only remove reminder notifications
     func removeAllNotifications() {
         let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.removeAllPendingNotificationRequests();
+        notificationCenter.removeAllPendingNotificationRequests()
+        notificationCenter.removeAllDeliveredNotifications()
     }
 }

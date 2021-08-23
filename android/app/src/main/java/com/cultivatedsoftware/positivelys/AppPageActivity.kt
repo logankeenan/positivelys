@@ -38,8 +38,7 @@ class AppPageActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_app_page)
 
-        // TODO - the color needs to be correct on the bottom navigation
-        // TODO - the active nav highlight needs to be correct
+        // TODO icons need to be correct
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener(onBottomNavigationClick())
 
@@ -72,8 +71,13 @@ class AppPageActivity : AppCompatActivity() {
         return { item ->
             when (item.itemId) {
                 R.id.positivelys_menu_item -> {
-                    // TODO make this navigate to positivelys.  Should this go to root??
-
+                    val url = "https://positivelys.com/positivelys"
+                    val bundle = bundleOf(WEB_PAGE_FRAGMENT_URL to url)
+                    supportFragmentManager.commit {
+                        setReorderingAllowed(true)
+                        add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
+                        addToBackStack(url)
+                    }
                     true
                 }
                 R.id.reminders_menu_item -> {

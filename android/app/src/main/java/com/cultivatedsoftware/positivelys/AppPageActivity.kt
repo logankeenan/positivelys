@@ -27,6 +27,14 @@ const val APP_PAGE_WAS_REDIRECT = "com.cultivatedsoftware.positivelys.APP_PAGE_W
 const val IMAGE_REQUEST_CODE = 1
 private const val STORAGE_PERMISSION_CODE = 101
 
+
+// TODO when the user clicks back we should reload the page
+// TODO when the user re-opens the app then it should reload the page
+//  https://developer.android.com/guide/components/activities/activity-lifecycle
+// TODO should we switch to the navigation component?
+//  https://developer.android.com/guide/fragments/fragmentmanager - currently using this
+//  https://developer.android.com/guide/navigation -- use this?
+
 class AppPageActivity : AppCompatActivity() {
     var imagePickerPath: String = ""
     var imagePickerInputId: String = ""
@@ -56,7 +64,6 @@ class AppPageActivity : AppCompatActivity() {
             val bundle = bundleOf(WEB_PAGE_FRAGMENT_URL to url)
 
             supportFragmentManager.commit {
-                setReorderingAllowed(true)
                 add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
             }
 
@@ -73,7 +80,6 @@ class AppPageActivity : AppCompatActivity() {
                     val url = "https://positivelys.com/positivelys"
                     val bundle = bundleOf(WEB_PAGE_FRAGMENT_URL to url)
                     supportFragmentManager.commit {
-                        setReorderingAllowed(true)
                         add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
                         addToBackStack(url)
                     }
@@ -83,7 +89,6 @@ class AppPageActivity : AppCompatActivity() {
                     val url = "https://positivelys.com/reminders"
                     val bundle = bundleOf(WEB_PAGE_FRAGMENT_URL to url)
                     supportFragmentManager.commit {
-                        setReorderingAllowed(true)
                         add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
                         addToBackStack(url)
                     }
@@ -147,19 +152,16 @@ class AppPageActivity : AppCompatActivity() {
 
                 if (fragmentUrl == url) {
                     supportFragmentManager.commit {
-                        setReorderingAllowed(true)
                         replace<WebPageFragment>(R.id.fragment_container_view, null, bundle)
                     }
                 } else {
                     supportFragmentManager.commit {
-                        setReorderingAllowed(true)
                         add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
                         addToBackStack(url)
                     }
                 }
             } else {
                 supportFragmentManager.commit {
-                    setReorderingAllowed(true)
                     add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
                     addToBackStack(url)
                 }

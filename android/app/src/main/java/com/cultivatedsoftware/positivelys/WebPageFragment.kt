@@ -24,12 +24,6 @@ class WebPageFragment : Fragment(R.layout.fragment_web_page) {
         }
    }
 
-    override fun onResume() {
-        super.onResume()
-
-        reloadPageToUpdateCountWhenNextDay()
-    }
-
     fun setTitle() {
         val titleElement = this.activity?.findViewById<TextView>(R.id.toolbar_title)
         titleElement?.setText(webView.title.replace("Positivelys |", ""))
@@ -65,6 +59,7 @@ class WebPageFragment : Fragment(R.layout.fragment_web_page) {
 
         webView.webViewClient = webViewClient
         webView.settings.javaScriptEnabled = true
+        // TODO historyUrl which is really failUrl should be a sorry somthing when wrong page
         webView.loadDataWithBaseURL(
             "file:///android_asset/",
             body,
@@ -76,9 +71,4 @@ class WebPageFragment : Fragment(R.layout.fragment_web_page) {
         return inflate
     }
 
-    private fun reloadPageToUpdateCountWhenNextDay() {
-         if (fragmentUrl == "https://positivelys.com/positivelys") {
-             webView.reload()
-         }
-    }
 }

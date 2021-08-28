@@ -38,7 +38,6 @@ class AppPageActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_app_page)
 
-        // TODO icons need to be correct
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener(onBottomNavigationClick())
 

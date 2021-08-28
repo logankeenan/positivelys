@@ -3,11 +3,11 @@
     <item
         android:id="@+id/positivelys_menu_item"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_info"
+        android:icon="@drawable/positivelys_nav_icon"
         android:title="@string/positivelys"/>
     <item
         android:id="@+id/reminders_menu_item"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_info"
+        android:icon="@drawable/reminders_nav_icon"
         android:title="@string/reminders"/>
 </menu>

@@ -10,7 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.transition.Visibility
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -18,7 +18,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import com.cultivatedsoftware.positivelys.services.FileService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -61,16 +60,29 @@ class AppPageActivity : AppCompatActivity() {
                 url = "https://positivelys.com/positivelys"
             }
 
-            val bundle = bundleOf(WEB_PAGE_FRAGMENT_URL to url)
-
             supportFragmentManager.commit {
-                add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
+                add(R.id.fragment_container_view, WebPageFragment(url))
             }
 
             supportFragmentManager.addOnBackStackChangedListener {
-                (supportFragmentManager.fragments.first() as WebPageFragment).setTitle()
+                // TODO - this doesn't do what I expect it to do. It fires when the stack changes
+                (supportFragmentManager.fragments.last() as WebPageFragment).setTitle()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        // TODO this fires before it's been popped off.
+        val fragmentUrl = (supportFragmentManager.fragments.last() as WebPageFragment).fragmentUrl
+        Log.d("positivelys: ", "onBackPressed: $fragmentUrl")
+
+        super.onBackPressed()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        (supportFragmentManager.fragments.last() as WebPageFragment).reload()
     }
 
     private fun onBottomNavigationClick(): (MenuItem) -> Boolean {
@@ -78,18 +90,17 @@ class AppPageActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.positivelys_menu_item -> {
                     val url = "https://positivelys.com/positivelys"
-                    val bundle = bundleOf(WEB_PAGE_FRAGMENT_URL to url)
+
                     supportFragmentManager.commit {
-                        add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
+                        add(R.id.fragment_container_view, WebPageFragment(url))
                         addToBackStack(url)
                     }
                     true
                 }
                 R.id.reminders_menu_item -> {
                     val url = "https://positivelys.com/reminders"
-                    val bundle = bundleOf(WEB_PAGE_FRAGMENT_URL to url)
                     supportFragmentManager.commit {
-                        add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
+                        add(R.id.fragment_container_view, WebPageFragment(url))
                         addToBackStack(url)
                     }
 
@@ -139,10 +150,9 @@ class AppPageActivity : AppCompatActivity() {
         if (intent != null) {
             var url = intent.getStringExtra(APP_PAGE_ACTIVITY_URL)
 
-            val bundle = bundleOf("url" to url)
-
 
             val wasRedirect = intent.getBooleanExtra(APP_PAGE_WAS_REDIRECT, false)
+            val webPageFragment = WebPageFragment(url)
 
             if (wasRedirect) {
                 supportFragmentManager.popBackStack()
@@ -152,17 +162,17 @@ class AppPageActivity : AppCompatActivity() {
 
                 if (fragmentUrl == url) {
                     supportFragmentManager.commit {
-                        replace<WebPageFragment>(R.id.fragment_container_view, null, bundle)
+                        replace(R.id.fragment_container_view, webPageFragment)
                     }
                 } else {
                     supportFragmentManager.commit {
-                        add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
+                        add(R.id.fragment_container_view, webPageFragment)
                         addToBackStack(url)
                     }
                 }
             } else {
                 supportFragmentManager.commit {
-                    add<WebPageFragment>(R.id.fragment_container_view, null, bundle)
+                    add(R.id.fragment_container_view, webPageFragment)
                     addToBackStack(url)
                 }
             }

@@ -1,5 +1,7 @@
 # Positivelys mono-repo
 
+See [Past Rust Experiments: Positivelys & Shared Spaces](https://logankeenan.com/posts/past-rust-experiments-positivelys-and-shared-spaces/) for more details
+
 ## Running Locally
 
 The AppContext has an  `environment` property which can be defined as "development" or an empty string. When set to
